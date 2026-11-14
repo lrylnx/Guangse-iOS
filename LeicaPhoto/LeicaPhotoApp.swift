@@ -12,6 +12,7 @@ struct ContentView: View {
     @StateObject private var model = PhotoEditorModel()
     @State private var selection: [PhotosPickerItem] = []
     @State private var advanced = false
+    @GestureState private var holdingComparison = false
     @State private var showingCamera = false
     @State private var recoveredCameraOriginals = false
     private let panel = Color(red: 0.105, green: 0.11, blue: 0.13)
@@ -85,9 +86,10 @@ struct ContentView: View {
             RoundedRectangle(cornerRadius: 22).fill(panel)
             if let preview = model.preview {
                 Image(uiImage: preview).resizable().scaledToFit().padding(5)
+                    .overlay { comparisonOverlay }
                 VStack {
                     HStack {
-                        Text(model.showingOriginal ? "原图" : (model.previewing ? "生成预览中" : "效果预览"))
+                        Text(holdingComparison ? "左原图 · 右效果" : (model.previewing ? "生成预览中" : "效果预览"))
                             .font(.caption.weight(.medium)).padding(.horizontal, 10).padding(.vertical, 6)
                             .background(.black.opacity(0.65), in: Capsule())
                         Spacer()
@@ -110,11 +112,14 @@ struct ContentView: View {
                         }
                         HStack {
                             Spacer()
-                            Button { model.compare() } label: {
-                                Label(model.showingOriginal ? "看效果" : "看原图", systemImage: "square.on.square")
-                                    .font(.caption.weight(.medium)).padding(.horizontal, 12).padding(.vertical, 8)
-                                    .background(.black.opacity(0.7), in: Capsule())
-                            }.buttonStyle(.plain).disabled(model.busy)
+                            Label("按住对比", systemImage: "rectangle.lefthalf.inset.filled")
+                                .font(.caption.weight(.medium)).padding(.horizontal, 16).padding(.vertical, 12)
+                                .background(.black.opacity(0.7), in: Capsule())
+                                .contentShape(Capsule())
+                                .gesture(DragGesture(minimumDistance: 0).updating($holdingComparison) { _, held, _ in held = true })
+                                .allowsHitTesting(!model.busy && model.comparisonOriginal != nil)
+                                .opacity(model.comparisonOriginal == nil ? 0.5 : 1)
+                                .accessibilityLabel("按住显示左侧原图、右侧效果，松开恢复效果")
                         }
                     }
                 }.padding(12)
@@ -132,6 +137,18 @@ struct ContentView: View {
         }.frame(height: height).clipShape(RoundedRectangle(cornerRadius: 22))
     }
 
+    private var comparisonOverlay: some View {
+        GeometryReader { geometry in
+            if holdingComparison, let original = model.comparisonOriginal {
+                Image(uiImage: original).resizable().scaledToFit()
+                    .padding(5).frame(width: geometry.size.width, height: geometry.size.height)
+                    .mask(alignment: .leading) { Rectangle().frame(width: geometry.size.width / 2) }
+                Rectangle().fill(.white.opacity(0.9)).frame(width: 1)
+                    .position(x: geometry.size.width / 2, y: geometry.size.height / 2)
+            }
+        }.allowsHitTesting(false)
+    }
+
     private var photoStrip: some View {
         VStack(alignment: .leading, spacing: 9) {
             HStack {
@@ -146,7 +163,7 @@ struct ContentView: View {
                             Image(uiImage: photo.thumbnail).resizable().scaledToFill()
                                 .frame(width: 65, height: 76).clipped()
                                 .overlay(alignment: .bottomTrailing) {
-                                    if photo.savedSettings == model.settings {
+                                    if photo.savedSettings == model.settings && photo.cameraBackup == nil {
                                         Image(systemName: "checkmark.circle.fill").foregroundStyle(.white, .green).padding(4)
                                     } else if photo.failure != nil {
                                         Image(systemName: "exclamationmark.circle.fill").foregroundStyle(.white, .red).padding(4)

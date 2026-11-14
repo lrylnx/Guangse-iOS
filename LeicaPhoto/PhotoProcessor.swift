@@ -76,12 +76,12 @@ actor PhotoProcessor {
                 } catch { try? FileManager.default.removeItem(at: url); throw error }
                 cache[key] = url
                 order.append(key)
-                // Retain the latest AI configuration for EVERY selected photo.
-                // These are disk files; a fifth photo must not evict the first.
-                for stale in order.filter({ $0.id == key.id && $0 != key }) {
+                // Keep the latest parameter configuration separately for each AI mode.
+                // Switching M9 / M9D must not destroy the other mode.
+                for stale in order.filter({ $0.id == key.id && $0.mode == key.mode && $0 != key }) {
                     if let url = cache.removeValue(forKey: stale) { try? FileManager.default.removeItem(at: url) }
                 }
-                order.removeAll { $0.id == key.id && $0 != key }
+                order.removeAll { $0.id == key.id && $0.mode == key.mode && $0 != key }
                 guard let cached = CIImage(contentsOf: url) else { throw PhotoError.renderFailed }
                 ai = cached
             }
@@ -105,7 +105,7 @@ actor PhotoProcessor {
             try PhotoExport.writePNG(CIImage(cgImage: image), to: url, context: FilterEngine.context)
             try Task.checkCancellation()
         } catch { try? FileManager.default.removeItem(at: url); throw error }
-        for stale in Array(previews.keys).filter({ $0.id == key.id && $0.original == key.original }) {
+        for stale in Array(previews.keys).filter({ $0.id == key.id && $0.original == key.original && $0.settings?.mode == key.settings?.mode }) {
             if let old = previews.removeValue(forKey: stale) { try? FileManager.default.removeItem(at: old) }
         }
         previews[key] = url

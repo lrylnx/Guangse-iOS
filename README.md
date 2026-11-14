@@ -1,15 +1,15 @@
 # 光色 · Guangse iOS
 
-在 iPhone / iPad 本地运行的 M9 AI 照片处理实验项目。当前版本 **0.5.0（build 6）**，要求 **iOS 17+**。
+在 iPhone / iPad 本地运行的 M9 AI 照片处理实验项目。当前版本 **0.5.1（build 7）**，要求 **iOS 17+**。
 
-[下载待签名 IPA（Releases）](https://github.com/lrylnx/Guangse-iOS/releases) · [v0.5.0](https://github.com/lrylnx/Guangse-iOS/releases/tag/v0.5.0)
+[下载待签名 IPA（Releases）](https://github.com/lrylnx/Guangse-iOS/releases) · [v0.5.1](https://github.com/lrylnx/Guangse-iOS/releases/tag/v0.5.1)
 
 ## 功能
 
 - 4 个 Core ML 模型：M9 low、high、colorfix，以及 M9D 蒸馏模型。
 - 49 款滤镜，支持 AI 与滤镜强度调节、原图对比。
 - 相册多选、顺序批量处理、生成阶段与百分比进度。
-- 内存及磁盘预览缓存，同一照片和设置切换时复用结果。
+- 内存及磁盘预览缓存，每张照片分别保留 M9 / M9D 的最新结果，两种模式来回切换复用已完成的结果。
 - 直接将效果照保存到相册，输出无损 PNG。
 - 画质优先拍照，支持设备可用的镜头、闪光灯及点按对焦。
 - 拍照后自动保存未改写的原片，再运行与相册导入共用的处理管线并保存效果照。
@@ -31,7 +31,7 @@ open LeicaPhoto.xcodeproj
 生成供外部重签的设备 IPA：
 
 ```sh
-python3 scripts/build_ipa.py /tmp/Guangse-0.5.0-unsigned.ipa
+python3 scripts/build_ipa.py /tmp/Guangse-0.5.1-unsigned.ipa
 ```
 
 不传输出路径时，IPA 写入当前用户的桌面。该脚本验证 ARM64、版本、权限说明、4 个编译模型、49 款滤镜及 ZIP 完整性，不导出私钥、不创建证书。安装需要自己的 p12 和匹配描述文件。
@@ -41,9 +41,18 @@ python3 scripts/build_ipa.py /tmp/Guangse-0.5.0-unsigned.ipa
 ## 使用
 
 1. 从相册批量选图，或先调整 AI / 滤镜设置后点相机拍照。
-2. 点击缩略图切换预览，查看原图或调整效果。
+2. 点击缩略图切换预览；按住“按住对比”显示左侧原图、右侧效果，松开恢复效果图。
 3. 相册照片点底部按钮批量保存；拍摄照片自动保存原片及效果照。
 4. 可中止批量保存；同一会话再次保存会跳过同一设置下已经成功的照片。
+
+## 0.5.1 修复
+
+- M9 与 M9D 的完整 AI 缓存和最终预览分别保留；内存回收后仍从各自磁盘预览读取。每种模式只保留最新参数/滤镜预览，修改设置仍会更新相应结果。
+- 新增按住左右对比，松开自动恢复效果图；原图独立预载，不因对比取消或重新启动 AI。
+- 相机原片改为通过原始字节添加至 Photos，避免依赖内部 `.capture` 暂存文件路径。不重新压缩原片。
+- 原片与 PNG 效果照分别记录保存成功状态。一项失败不阻止另一项；当前会话重试只保存尚未成功的资源。
+- 保存失败显示阶段、系统错误域及代码。原片未保存时保留本机暂存，效果照已保存也不会误显示全部完成。
+- 模式切换缓存回归及部分保存失败/重试/取消测试通过。实际 PhotoKit 写入和按住手势仍需 iPhone 验证。
 
 ## 画质与实现边界
 

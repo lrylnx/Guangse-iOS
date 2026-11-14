@@ -5,6 +5,11 @@ import Photos
 enum CameraPhotoLibrary {
     static func saveOriginal(_ url: URL, capturedAt: Date) async throws -> String? {
         let type = try CameraOriginalStore.type(of: url)
+        // Import bytes rather than the outbox's private .capture filename.
+        // Never decode/re-encode the original, and retain the backup on failure.
+        let data = try await Task.detached(priority: .userInitiated) {
+            try Data(contentsOf: url)
+        }.value
         let identifier = SavedIdentifier()
         try await PHPhotoLibrary.shared().performChanges {
             let asset = PHAssetCreationRequest.forAsset()
@@ -13,7 +18,7 @@ enum CameraPhotoLibrary {
             options.shouldMoveFile = false
             options.uniformTypeIdentifier = type.identifier
             options.originalFilename = "光色原片-\(UUID().uuidString.prefix(8)).\(type.suffix)"
-            asset.addResource(with: .photo, fileURL: url, options: options)
+            asset.addResource(with: .photo, data: data, options: options)
             identifier.set(asset.placeholderForCreatedAsset?.localIdentifier)
         }
         return identifier.get()

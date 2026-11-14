@@ -20,6 +20,9 @@ final class PhotoEditorModel: ObservableObject {
     @Published var settings = EditorSettings() { didSet { if settings != oldValue { settingsChanged() } } }
     @Published var preview: UIImage?
     @Published var showingOriginal = false
+    @Published private(set) var comparisonOriginal: UIImage?
+    private var comparisonID: UUID?
+    private var comparisonTask: Task<Void, Never>?
     @Published var importing = false
     @Published var preparingCamera = false
     @Published var saving = false
@@ -56,7 +59,7 @@ final class PhotoEditorModel: ObservableObject {
     }
 
     var selected: ImportedPhoto? { photos.first { $0.id == selectedID } }
-    var pendingCount: Int { photos.filter { $0.savedSettings != settings }.count }
+    var pendingCount: Int { photos.filter { $0.savedSettings != settings || $0.cameraBackup != nil }.count }
     var completedCount: Int { photos.count - pendingCount }
     var busy: Bool { importing || saving || preparingCamera }
     var selectedPosition: String {
@@ -79,15 +82,29 @@ final class PhotoEditorModel: ObservableObject {
         schedulePreview()
     }
 
-    func compare() {
-        showingOriginal.toggle()
-        schedulePreview()
+    private func prepareComparison(_ source: PhotoSource) {
+        guard comparisonID != source.id else { return }
+        comparisonTask?.cancel()
+        comparisonID = source.id; comparisonOriginal = nil
+        comparisonTask = Task {
+            do {
+                // Independent of the serial AI actor, so holding comparison cannot
+                // cancel an inference or queue an original behind one.
+                let cg = try await Task.detached(priority: .userInitiated) {
+                    try FilterEngine.cgImage(FilterEngine.source(Data(contentsOf: source.url), maxDimension: 1600))
+                }.value
+                try Task.checkCancellation()
+                guard comparisonID == source.id else { return }
+                comparisonOriginal = UIImage(cgImage: cg)
+            } catch { }
+        }
     }
 
     func schedulePreview() {
         previewTask?.cancel()
         let token = UUID(); previewID = token
         guard let source = selected?.source, !busy else { previewing = false; return }
+        prepareComparison(source)
         let snapshot = settings, before = showingOriginal
         let key = PreviewKey(source: source, settings: snapshot, original: before)
         previewing = false
@@ -177,7 +194,7 @@ final class PhotoEditorModel: ObservableObject {
 
     func saveAll() {
         guard !busy, pendingCount > 0 else { return }
-        savePhotos(photos.filter { $0.savedSettings != settings })
+        savePhotos(photos.filter { $0.savedSettings != settings || $0.cameraBackup != nil })
     }
 
     private func savePhotos(_ requested: [ImportedPhoto]) {
@@ -195,24 +212,22 @@ final class PhotoEditorModel: ObservableObject {
                 return
             }
             var success = 0, failed = 0, originalsSaved = 0
+            var details: [String] = []
             var lastSaveDate = Date.distantPast
             for (index, photo) in pending.enumerated() {
                 if Task.isCancelled { break }
-                do {
-                    if let backup = photo.cameraBackup {
-                        stage = "\(index + 1)/\(pending.count) · 保存拍摄原片"
+                let originalWrite: (() async throws -> Void)? = photo.cameraBackup.map { backup in
+                    return {
+                        self.stage = "\(index + 1)/\(pending.count) · 保存拍摄原片"
                         let identifier = try await CameraPhotoLibrary.saveOriginal(backup, capturedAt: photo.capturedAt ?? Date())
-                        // PhotoKit success is recorded even if cancellation arrived
-                        // while the transaction was in flight.
-                        if let i = photos.firstIndex(where: { $0.id == photo.id }) {
-                            photos[i].cameraBackup = nil
-                            photos[i].assetIdentifier = identifier
+                        if let i = self.photos.firstIndex(where: { $0.id == photo.id }) {
+                            self.photos[i].cameraBackup = nil; self.photos[i].assetIdentifier = identifier
                         }
-                        try? cameraOriginals?.confirm(backup)
-                        originalsSaved += 1
+                        try? self.cameraOriginals?.confirm(backup)
                     }
-                    try Task.checkCancellation()
-                    let url = try await processor.export(photo.source, settings: snapshot) { [weak observer = self] fraction, text in
+                }
+                let effectWrite: (() async throws -> Void)? = photo.savedSettings == snapshot ? nil : {
+                    let url = try await self.processor.export(photo.source, settings: snapshot) { [weak observer = self] fraction, text in
                         Task { @MainActor in
                             guard let self = observer, self.saving, self.saveID == token else { return }
                             self.progress = max(self.progress, (Double(index) + min(0.98, max(0, fraction))) / Double(pending.count))
@@ -223,39 +238,49 @@ final class PhotoEditorModel: ObservableObject {
                     try Task.checkCancellation()
                     let saveDate = max(Date(), lastSaveDate.addingTimeInterval(0.001))
                     lastSaveDate = saveDate
-                    stage = "\(index + 1)/\(pending.count) · 保存到相册"
+                    self.stage = "\(index + 1)/\(pending.count) · 保存效果照"
                     try await PHPhotoLibrary.shared().performChanges {
                         let creation = PHAssetCreationRequest.forAsset()
-                        // Explicitly override the imported photo's capture date for
-                        // Photos library sorting. Keep source EXIF inside the PNG.
                         creation.creationDate = saveDate
                         let options = PHAssetResourceCreationOptions()
                         options.originalFilename = url.lastPathComponent
-                        options.shouldMoveFile = true
+                        options.shouldMoveFile = false
                         creation.addResource(with: .photo, fileURL: url, options: options)
                     }
-                    // Record confirmed Photos success before respecting cancellation;
-                    // retrying a partial batch will skip these exact settings.
-                    if let i = photos.firstIndex(where: { $0.id == photo.id }) {
-                        photos[i].savedSettings = snapshot; photos[i].failure = nil
-                    }
-                    success += 1
-                } catch is CancellationError { break } catch {
+                    if let i = self.photos.firstIndex(where: { $0.id == photo.id }) { self.photos[i].savedSettings = snapshot }
+                }
+                let outcome = await PhotoSaveTransaction.run(original: originalWrite, effect: effectWrite)
+                if outcome.originalSaved { originalsSaved += 1 }
+                if outcome.effectSaved { success += 1 }
+                var errors: [String] = []
+                if let error = outcome.originalError { errors.append("原片：" + Self.saveError(error)) }
+                if let error = outcome.effectError { errors.append("效果照：" + Self.saveError(error)) }
+                if let i = photos.firstIndex(where: { $0.id == photo.id }) {
+                    photos[i].failure = errors.isEmpty ? nil : errors.joined(separator: "；")
+                }
+                if !errors.isEmpty {
                     failed += 1
-                    if let i = photos.firstIndex(where: { $0.id == photo.id }) { photos[i].failure = error.localizedDescription }
+                    if details.count < 3 { details.append("第\(index + 1)张 · " + errors.joined(separator: "；")) }
                 }
                 progress = Double(index + 1) / Double(pending.count)
             }
-            let cancelled = Task.isCancelled
             saving = false
-            if cancelled { message = "已停止。此次已保存 \(success) 张；再次保存会跳过已成功的照片。" }
+            let summary = "本次保存原片 \(originalsSaved) 张、效果照 \(success) 张。"
+            if Task.isCancelled { message = summary + "已停止，再次保存会跳过已成功的项目。" }
             else if failed > 0 {
-                let retained = photos.contains { $0.cameraBackup != nil }
-                message = "已保存 \(success) 张，\(failed) 张失败。再次点击保存，只会重试未成功的照片。" + (retained ? "未保存的拍摄原片仍在本机暂存。" : "")
-            }
-            else { message = originalsSaved > 0 ? "已将 \(originalsSaved) 张拍摄原片和 \(success) 张无损效果照保存到相册。" : "已将 \(success) 张无损照片保存到相册。" }
+                message = summary + "\n" + details.joined(separator: "\n") + "\n可再次保存重试。尚未保存的拍摄原片仍保留在本机。"
+            } else { message = summary + "已全部保存到相册。" }
             schedulePreview()
         }
+    }
+
+    private static func saveError(_ error: Error) -> String {
+        let ns = error as NSError
+        var text = "\(ns.localizedDescription) [\(ns.domain):\(ns.code)]"
+        if let underlying = ns.userInfo[NSUnderlyingErrorKey] as? NSError {
+            text += " / \(underlying.domain):\(underlying.code) \(underlying.localizedDescription)"
+        }
+        return text
     }
 
     func prepareForCamera() async -> Bool {
@@ -371,6 +396,7 @@ final class PhotoEditorModel: ObservableObject {
         guard !busy else { return }
         previewTask?.cancel(); previewID = UUID()
         let oldSources = photos.map { $0.source.url }
+        comparisonTask?.cancel(); comparisonID = nil; comparisonOriginal = nil
         previewCache.removeAll(); displayedPreviewKey = nil
         photos.removeAll(); selectedID = nil; preview = nil; previewing = false
         Task {

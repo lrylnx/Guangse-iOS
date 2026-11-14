@@ -99,7 +99,7 @@ struct CameraView: View {
     private var help: some View {
         VStack(spacing: 5) {
             Text("取景为原始画面 · 点按对焦").font(.caption).foregroundStyle(.secondary)
-            Text("先保存原片，再生成并保存 AI 效果").font(.caption).foregroundStyle(.secondary)
+            Text("原片与 AI 效果分别保存到相册").font(.caption).foregroundStyle(.secondary)
         }.multilineTextAlignment(.center)
     }
 
