@@ -2,6 +2,7 @@ import Foundation
 import CoreImage
 
 struct EditorSettings: Hashable, Sendable, Codable {
+    var preserveHDR = true
     var useAI = true
     var mode: M9AIMode = .distill
     var aiStrength = 1.0
@@ -102,7 +103,11 @@ actor PhotoProcessor {
     private func storePreview(_ image: CGImage, key: PreviewKey) throws {
         let url = directory.appendingPathComponent("preview-\(UUID().uuidString).png")
         do {
-            try PhotoExport.writePNG(CIImage(cgImage: image), to: url, context: FilterEngine.context)
+            if image.bitsPerComponent > 8, image.colorSpace.map({ $0.isHDR() }) == true {
+                try HDRPhoto.writePNG(CIImage(cgImage: image), to: url)
+            } else {
+                try PhotoExport.writePNG(CIImage(cgImage: image), to: url, context: FilterEngine.context)
+            }
             try Task.checkCancellation()
         } catch { try? FileManager.default.removeItem(at: url); throw error }
         for stale in Array(previews.keys).filter({ $0.id == key.id && $0.original == key.original && $0.settings?.mode == key.settings?.mode }) {
@@ -125,15 +130,27 @@ actor PhotoProcessor {
             let key = PreviewKey(source: source, settings: settings, original: original)
             if let url = previews[key], let image = CIImage(contentsOf: url) {
                 // Decode a finished 1600px preview: no AI, LUT, resize or spinner.
+                if let space = image.colorSpace, space.isHDR() { return try HDRPhoto.display(image) }
                 return try FilterEngine.cgImage(image)
             }
             willRender()
             let image: CIImage
-            if original { image = try FilterEngine.source(Data(contentsOf: source.url), maxDimension: 1600) }
-            else { image = try processed(source, settings: settings, progress: progress).0 }
+            var hdr: CIImage?
+            if original {
+                let data = try Data(contentsOf: source.url)
+                hdr = try HDRPhoto.source(data)?.image
+                image = try FilterEngine.source(data, maxDimension: 1600)
+            } else {
+                let processed = try processed(source, settings: settings, progress: progress)
+                image = processed.0
+                if settings.preserveHDR {
+                    progress(0.88, "保留原图 HDR")
+                    hdr = try HDRPhoto.reconstruct(image, sourceData: processed.1)
+                }
+            }
             try Task.checkCancellation()
             progress(0.92, "生成显示预览")
-            let preview = try smallImage(image)
+            let preview = try hdr.map { try HDRPhoto.display($0) } ?? smallImage(image)
             progress(0.96, "缓存预览")
             try storePreview(preview, key: key)
             progress(1, "预览完成")
@@ -146,15 +163,21 @@ actor PhotoProcessor {
         try autoreleasepool {
             let (image, data) = try processed(source, settings: settings, progress: progress)
             try Task.checkCancellation()
-            progress(0.95, "写入无损照片")
+            progress(0.88, "准备保存照片")
             let url = directory.appendingPathComponent("光色-\(UUID().uuidString).png")
             do {
-                try PhotoExport.writePNG(image, to: url, context: FilterEngine.context, sourceData: data)
+                let hdr: CIImage?
+                if settings.preserveHDR {
+                    progress(0.90, "保留原图 HDR")
+                    hdr = try HDRPhoto.reconstruct(image, sourceData: data)
+                } else { hdr = nil }
+                if let hdr { try HDRPhoto.writePNG(hdr, to: url, sourceData: data) }
+                else { try PhotoExport.writePNG(image, to: url, context: FilterEngine.context, sourceData: data) }
                 try Task.checkCancellation()
                 // Batch-exported photos are ready to preview without processing again.
                 let key = PreviewKey(source: source, settings: settings, original: false)
                 if previews[key] == nil {
-                    do { try storePreview(smallImage(image), key: key) }
+                    do { try storePreview(hdr.map { try HDRPhoto.display($0) } ?? smallImage(image), key: key) }
                     catch is CancellationError { throw CancellationError() }
                     catch { /* Optional preview cache must not fail a finished export. */ }
                 }

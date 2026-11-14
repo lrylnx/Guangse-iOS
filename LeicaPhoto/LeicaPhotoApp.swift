@@ -100,11 +100,11 @@ struct ContentView: View {
         ZStack {
             RoundedRectangle(cornerRadius: 22).fill(panel)
             if let preview = model.preview {
-                Image(uiImage: preview).resizable().scaledToFit().padding(5)
+                PhotoPreviewImage(image: preview).frame(maxWidth: .infinity, maxHeight: .infinity).padding(5)
                     .overlay { comparisonOverlay }
                 VStack {
                     HStack {
-                        Text(holdingComparison ? "左原图 · 右效果" : (model.previewing ? "生成预览中" : "效果预览"))
+                        Text(holdingComparison ? "左原图 · 右效果" : (model.previewing ? "生成预览中" : (model.previewIsHDR ? "效果预览 · HDR" : "效果预览 · SDR")))
                             .font(.caption.weight(.medium)).padding(.horizontal, 10).padding(.vertical, 6)
                             .background(.black.opacity(0.65), in: Capsule())
                         Spacer()
@@ -155,7 +155,7 @@ struct ContentView: View {
     private var comparisonOverlay: some View {
         GeometryReader { geometry in
             if holdingComparison, let original = model.comparisonOriginal {
-                Image(uiImage: original).resizable().scaledToFit()
+                PhotoPreviewImage(image: original)
                     .padding(5).frame(width: geometry.size.width, height: geometry.size.height)
                     .mask(alignment: .leading) { Rectangle().frame(width: geometry.size.width / 2) }
                 Rectangle().fill(.white.opacity(0.9)).frame(width: 1)
@@ -201,6 +201,10 @@ struct ContentView: View {
 
     private var controls: some View {
         VStack(alignment: .leading, spacing: 18) {
+            Toggle("保留原图 HDR", isOn: $model.settings.preserveHDR)
+                .font(.subheadline)
+            Text("原图含 HDR 时输出 16 位 HDR PNG；普通照片不强行提亮。HDR 亮度按原片重新匹配，文件会更大。")
+                .font(.caption).foregroundStyle(.secondary)
             HStack {
                 Label("AI 风格", systemImage: "sparkles").font(.subheadline.weight(.semibold))
                 Spacer()
@@ -304,7 +308,7 @@ struct ContentView: View {
                         .font(.headline).frame(maxWidth: .infinity).padding(.vertical, 8)
                 }.buttonStyle(.borderedProminent).disabled(model.busy || model.pendingCount == 0)
             }
-            Text("PNG 无损 · sRGB / SDR · 文件会比 JPEG 更大")
+            Text(model.settings.preserveHDR ? "PNG 无损 · 自动保留源 HDR · 文件会更大" : "PNG 无损 · sRGB / SDR")
                 .font(.caption2).foregroundStyle(.secondary)
         }.padding(.horizontal, 18).padding(.top, 12).padding(.bottom, 8).background(.ultraThinMaterial)
     }

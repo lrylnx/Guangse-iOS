@@ -65,6 +65,7 @@ final class PhotoEditorModel: ObservableObject {
         }
     }
 
+    var previewIsHDR: Bool { preview?.cgImage?.colorSpace?.isHDR() == true }
     var selected: ImportedPhoto? { photos.first { $0.id == selectedID } }
     var pendingCount: Int { photos.filter { $0.savedSettings != settings || $0.cameraBackup != nil }.count }
     var completedCount: Int { photos.count - pendingCount }
@@ -99,7 +100,9 @@ final class PhotoEditorModel: ObservableObject {
                 // Independent of the serial AI actor, so holding comparison cannot
                 // cancel an inference or queue an original behind one.
                 let cg = try await Task.detached(priority: .userInitiated) {
-                    try FilterEngine.cgImage(FilterEngine.source(Data(contentsOf: source.url), maxDimension: 1600))
+                    let data = try Data(contentsOf: source.url)
+                    if let hdr = try? HDRPhoto.source(data), let pixels = try? HDRPhoto.display(hdr.image) { return pixels }
+                    return try FilterEngine.cgImage(FilterEngine.source(data, maxDimension: 1600))
                 }.value
                 try Task.checkCancellation()
                 guard comparisonID == source.id else { return }

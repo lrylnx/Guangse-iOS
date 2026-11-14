@@ -1,8 +1,8 @@
 # 光色 · Guangse iOS
 
-在 iPhone / iPad 本地运行的 M9 AI 照片处理实验项目。当前版本 **0.6.0（build 8）**，要求 **iOS 17+**。
+在 iPhone / iPad 本地运行的 M9 AI 照片处理实验项目。当前版本 **0.7.0（build 9）**，要求 **iOS 17+**。
 
-[下载待签名 IPA（Releases）](https://github.com/lrylnx/Guangse-iOS/releases) · [v0.6.0](https://github.com/lrylnx/Guangse-iOS/releases/tag/v0.6.0)
+[下载待签名 IPA（Releases）](https://github.com/lrylnx/Guangse-iOS/releases) · [v0.7.0](https://github.com/lrylnx/Guangse-iOS/releases/tag/v0.7.0)
 
 ## 功能
 
@@ -31,7 +31,7 @@ open LeicaPhoto.xcodeproj
 生成供外部重签的设备 IPA：
 
 ```sh
-python3 scripts/build_ipa.py /tmp/Guangse-0.6.0-unsigned.ipa
+python3 scripts/build_ipa.py /tmp/Guangse-0.7.0-unsigned.ipa
 ```
 
 不传输出路径时，IPA 写入当前用户的桌面。该脚本验证 ARM64、版本、权限说明、4 个编译模型、49 款滤镜及 ZIP 完整性，不导出私钥、不创建证书。安装需要自己的 p12 和匹配描述文件。
@@ -44,6 +44,22 @@ python3 scripts/build_ipa.py /tmp/Guangse-0.6.0-unsigned.ipa
 2. 点击缩略图切换预览；按住“按住对比”显示左侧原图、右侧效果，松开恢复效果图。
 3. 相册照片点底部按钮批量保存；拍摄照片自动保存原片及效果照。
 4. 可中止批量保存；同一会话再次保存会跳过同一设置下已经成功的照片。
+
+## 保留源 HDR（0.7.0）
+
+“保留原图 HDR”默认开启。输入包含可解码 HDR 信息且像素确实超过 SDR 白色时，效果照输出 **16 位 PQ HDR PNG**，继续使用无损 PNG 压缩；普通 SDR 输入保持原来的 8 位 sRGB PNG，不人为增加 HDR 亮度。关闭开关可继续导出 SDR。
+
+M9/M9D 网络及 LUT 仍在原有 SDR 工作域运行。完成 SDR 调色后，将源 HDR 与源 SDR 基底的**线性亮度比**按输出几何对齐，再应用于完成的 SDR 效果图，得到新 HDR 像素。它保留空间亮度增益，不是直接复制旧 gain map，也不是完整的 HDR 神经网络移植；模型已裁掉的颜色或纹理、原厂 HDR 色调策略不会因此恢复，不能保证原图或安卓的 HDR 观感完全一致。增益在极暗基底作保护，并限制异常放大。
+
+- 同时支持增益图输入及 PQ/HLG HDR 输入；实际可解码格式取决于系统。
+- 预览、内存缓存和磁盘缓存保留 16 位 HDR；主图与按住对比通过允许高动态范围的 UIImageView 显示。
+- 两种 AI 模式的缓存继续分别保留；只切换 HDR 输出不重复运行神经网络。
+- 原有预设会迁移并默认启用 HDR，不重置 AI 模式或滤镜设置；相册导入、拍照和快捷指令共用该逻辑。
+- HDR PNG 比原来的 8 位 PNG 更大；模型工作域仍为 8 位，输出容器的 16 位不代表模型恢复了 16 位颜色细节。
+- HDR 需要源照片确实带有信息。已导出的 SDR PNG 无法补回丢失的 HDR；分享或快捷指令若先把照片转为 SDR，也无法凭空恢复。请用原始 HDR 照片重新生成，必要时直接用 App 相册选择器导入。
+- 目标屏幕、系统 HDR 设置与查看软件决定最终显示亮度。实际 iPhone 的 Photos HDR 呈现仍需实机验证。
+
+`Checks/hdr-export` 验证了 16 位/PQ 编码、重读后线性亮度大于 1、HEIC 自适应 gain-map 输入、亮度比计算、缩放及竖图对齐、M9D 输出、HDR 预览/缓存、SDR 不伪装 HDR、关闭开关及旧预设迁移。Mac 编码数值验证不等同于 iPhone 屏幕亮度或 Photos 写入实测。
 
 ## 相册分享一键生成（0.6.0）
 
@@ -75,7 +91,7 @@ python3 scripts/build_ipa.py /tmp/Guangse-0.6.0-unsigned.ipa
 
 ## 画质与实现边界
 
-- PNG 无损保存的是当前 **8 位 sRGB / SDR** 处理结果，不代表 RAW、16 位或完整 HDR；不能恢复源 JPEG 已损失的信息。
+- AI / 滤镜工作域仍为 **8 位 sRGB / SDR**。0.7.0 对真正 HDR 输入按上述策略重建亮度并输出 16 位 HDR PNG；普通输入仍为 8 位 SDR。不能恢复源 JPEG 已损失的信息，也不等同于 RAW 或完整 HDR 神经网络。
 - M9D 按原图尺寸分块处理；M9经典模型画布最多 4096×3072。
 - 相机优先使用 HEIC，必要时 JPEG。原片按相机返回的字节保存，效果照为 PNG。
 - 相同原片与设置共用同一处理流程；不能保证应用拍摄的底片与苹果自带相机相同。

@@ -3,9 +3,9 @@ import CoreImage
 import ImageIO
 import UniformTypeIdentifiers
 
-/// Exports the processed SDR pixels with an explicit sRGB ICC profile.
-/// Intentionally does not copy gain maps, maker notes, thumbnails or GPS from the
-/// source: those may no longer describe the processed, resized and oriented image.
+/// Exports rendered pixels with an explicit SDR sRGB or HDR PQ ICC profile.
+/// Never copies an old gain map: HDR output has newly reconstructed HDR pixels.
+/// Maker notes, thumbnails and GPS are not copied to the edited image.
 enum PhotoExport {
     enum ExportError: LocalizedError {
         case render, encode
@@ -24,6 +24,11 @@ enum PhotoExport {
                   type: UTType.png.identifier, quality: nil)
     }
 
+    static func writeHDRPNG(_ image: CIImage, to url: URL, sourceData: Data? = nil) throws {
+        try write(image, to: url, context: HDRPhoto.context, sourceData: sourceData,
+                  type: UTType.png.identifier, quality: nil, format: .RGBA16, colorSpace: HDRPhoto.pq)
+    }
+
     static func writeJPEG(_ image: CIImage, to url: URL, context: CIContext,
                           sourceData: Data? = nil, quality: Double = 0.97) throws {
         try write(image, to: url, context: context, sourceData: sourceData,
@@ -31,11 +36,11 @@ enum PhotoExport {
     }
 
     private static func write(_ image: CIImage, to url: URL, context: CIContext,
-                              sourceData: Data?, type: String, quality: Double?) throws {
-        let colorSpace = CGColorSpace(name: CGColorSpace.sRGB)!
+                              sourceData: Data?, type: String, quality: Double?, format: CIFormat = .RGBA8,
+                              colorSpace: CGColorSpace = CGColorSpace(name: CGColorSpace.sRGB)!) throws {
         let extent = image.extent.integral
         guard !extent.isEmpty, !extent.isInfinite,
-              let pixels = context.createCGImage(image, from: extent, format: .RGBA8,
+              let pixels = context.createCGImage(image, from: extent, format: format,
                                                   colorSpace: colorSpace) else {
             throw ExportError.render
         }
@@ -60,7 +65,7 @@ enum PhotoExport {
             for key in keys { if let value = exif[key as String] { capture[key as String] = value } }
             capture[kCGImagePropertyExifPixelXDimension as String] = pixels.width
             capture[kCGImagePropertyExifPixelYDimension as String] = pixels.height
-            capture[kCGImagePropertyExifColorSpace as String] = 1
+            capture[kCGImagePropertyExifColorSpace as String] = format == .RGBA8 ? 1 : 65535
             properties[kCGImagePropertyExifDictionary as String] = capture
         }
         CGImageDestinationAddImage(destination, pixels, properties as CFDictionary)
