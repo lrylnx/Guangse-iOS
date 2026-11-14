@@ -1,0 +1,389 @@
+{
+  "apk": "1.0.40.apk",
+  "apk_sha256": "c526c0eb36ea58ef890e4d2d8e5a6b74cc17135111893f8fdbf55be0a4d2322e",
+  "filters": [
+    {
+      "id": "standard",
+      "source": "assets/luts/standard.plut",
+      "sha256": "b9754d3c7df5ca9e29124096e9859b1ec9b2ac51e2e15ea117f694dce5729209"
+    },
+    {
+      "id": "leica_m9",
+      "source": "assets/luts/Leica_M9_STD.plut",
+      "sha256": "2f68585e3e066ec324b32f6c0cbd90f707964019c6660251e640cb7a02aa7a19"
+    },
+    {
+      "id": "leica",
+      "source": "assets/luts/leica.plut",
+      "sha256": "293c277bde4789194c66b5ce5613acb9e66e370ecad681121942ca6a1f4e778b"
+    },
+    {
+      "id": "monochrome",
+      "source": "assets/luts/monochrome.plut",
+      "sha256": "9833fb02e2949830a832894efc4bfb17dd52c1c296dd50af2ed1b31173db47f1"
+    },
+    {
+      "id": "Hasselblad",
+      "source": "assets/luts/Hasselblad.plut",
+      "sha256": "cff3c942abeb3ab95b722febab8209e67ed867530916bd6e2b66d9f6639c8f23"
+    },
+    {
+      "id": "Hasselblad_portrait",
+      "source": "assets/luts/Hasselblad_portrait.plut",
+      "sha256": "418ef3004ed4454c5ed4f1a464f8f2d88514468d74607e876fe75b6f0ac8fcab"
+    },
+    {
+      "id": "fl3",
+      "source": "assets/luts/fl3.plut",
+      "sha256": "138ba766a457f4a582b21c0b7d4bd5c7e71b41c504fa03c4b84a65f5cab6d216"
+    },
+    {
+      "id": "nc",
+      "source": "assets/luts/nc.plut",
+      "sha256": "521e325b5cf2454eefe8e38cecdcfb98aedca84b0b2eff506c7bded3d450537a"
+    },
+    {
+      "id": "cc",
+      "source": "assets/luts/cc.plut",
+      "sha256": "60130c3453ce9a93a36b4ee7747e39561b759b74c648d582b2b86ac39f6e83b0"
+    },
+    {
+      "id": "astia",
+      "source": "assets/luts/astia.plut",
+      "sha256": "a62a1939b5f49ac9c1f4f902a8748506955d86015440564cd512023dd1433658"
+    },
+    {
+      "id": "ricoh_negative",
+      "source": "assets/luts/ricoh_negative.plut",
+      "sha256": "cffb44bc433c8166a416e2968e2101d1f3da2f10788fc6d0703ea140ae5d9b76"
+    },
+    {
+      "id": "ricoh_positive",
+      "source": "assets/luts/ricoh_positive.plut",
+      "sha256": "0b26160aac6d90edb36f25ba852b3c24201921af9fee0b10f1eece4f41672051"
+    },
+    {
+      "id": "ricoh_gr2_positive",
+      "source": "assets/luts/Ricoh_GR2_POSI.plut",
+      "sha256": "d36d84c09c0516cee590815c182f3c93cc05fdf74c6b52b497f25b8c618d2d70"
+    },
+    {
+      "id": "ricoh_green",
+      "source": "assets/luts/ricoh_green.plut",
+      "sha256": "8830e0cf7230ae2cf6eaf597747ce7bf6abb85b443d170c2f78e4936aef6d953"
+    },
+    {
+      "id": "ricoh_yellow",
+      "source": "assets/luts/ricoh_yellow.plut",
+      "sha256": "946ebf60dbc8fa3523c688a39eabf90cc4aa8d78dcd2c7f09bb5ad96c487d7a9"
+    },
+    {
+      "id": "pentax",
+      "source": "assets/luts/pentax.plut",
+      "sha256": "a0b37315d736c380eacb0982805e53bf50807931397dc901c0d8ab04acca3bc5"
+    },
+    {
+      "id": "pentax_harubeni",
+      "source": "assets/luts/Pentax_Harubeni.plut",
+      "sha256": "6b6701273bdc836650e6081cc092b78290003c2242d68c6bfa447c9a8347deec"
+    },
+    {
+      "id": "pentax_katen",
+      "source": "assets/luts/Pentax_Katen.plut",
+      "sha256": "04c18c073c3a311f5783cad1d5d61fe6f29cf1497075a39098718f976004e135"
+    },
+    {
+      "id": "pentax_kyushu",
+      "source": "assets/luts/Pentax_Kyushu.plut",
+      "sha256": "860c622a0d4b2f10345a3304ac2a4c57b6ae2972f5a285e55e034d21f9a63c4a"
+    },
+    {
+      "id": "pentax_fuyuno",
+      "source": "assets/luts/Pentax_Fuyuno.plut",
+      "sha256": "3404ef219d0b88ea2a3c279ae356750ad2d195e31b5375f9e218e38770d66563"
+    },
+    {
+      "id": "film_kodak_ultramax_400",
+      "source": "assets/luts/ultramax400.plut",
+      "sha256": "d51787890a2d00891edf7c1762c85a1484fee0643f8af897b521565472ced25d"
+    },
+    {
+      "id": "e100",
+      "source": "assets/luts/e100.plut",
+      "sha256": "6def49352e82121194cb5e484f35d5152981e7696a9b441bbc6b6d016dddf65b"
+    },
+    {
+      "id": "film_rollei_cn200",
+      "source": "assets/luts/cn200.plut",
+      "sha256": "1bf93c5ca7e3ae34b859250b1109602f2843324c59f66b5e845bd45b61c78684"
+    },
+    {
+      "id": "film_natura_1600",
+      "source": "assets/luts/nature1600.plut",
+      "sha256": "c827bc4f349941ff5778fd9bcfe28a07f9c54aeaf08227deaf5b7344dbd3a8cd"
+    },
+    {
+      "id": "film_superia_1600",
+      "source": "assets/luts/superia1600.plut",
+      "sha256": "cf08c0ddc9902ac8b676da0ea8bc72b6f480f2d0dc49e7fcabff3f4677adeeab"
+    },
+    {
+      "id": "film_cinestill_800t",
+      "source": "assets/luts/cinestill800t.33.plut",
+      "sha256": "8fc103abf19693aa1e611fb623cc1c6cd87a9e5b230ef645c32fe84c6c5718bb"
+    },
+    {
+      "id": "tone-0",
+      "source": "assets/cameralook/tone-0.lut",
+      "sha256": "7e8bd9c4d293a046b76409e7fa45a3cb0024d50fae59df370c1db065e810c14d"
+    },
+    {
+      "id": "tone-1",
+      "source": "assets/cameralook/tone-1.lut",
+      "sha256": "5c25cd64893d104a8d86de9e6e8e965e3e50698237cb0b87d6ed13e9bb087e98"
+    },
+    {
+      "id": "tone-2",
+      "source": "assets/cameralook/tone-2.lut",
+      "sha256": "12b12be5d8e4cff17c7ae619325bc4c4e2afd2c594772cce8fef779334c6b95d"
+    },
+    {
+      "id": "tone-3",
+      "source": "assets/cameralook/tone-3.lut",
+      "sha256": "cd72c8a64b2a99454726f10bdb410a317a55afe0e4d1a1607ce0dca31402efed"
+    },
+    {
+      "id": "tone-4",
+      "source": "assets/cameralook/tone-4.lut",
+      "sha256": "52342e01b64eed34cbd45f2fe7f1c71b8fe30013c59d1cb8867d2dc46cce2d4d"
+    },
+    {
+      "id": "tone-5",
+      "source": "assets/cameralook/tone-5.lut",
+      "sha256": "bb771ef7f6f2f35d43fa2e1a91bd88b2d6e777342663676269b411ff2be42f90"
+    },
+    {
+      "id": "tone-6",
+      "source": "assets/cameralook/tone-6.lut",
+      "sha256": "9a309f1023ae7ba21a85a6665cdf50f3572d9f5e16402c78359666c6e5377ebd"
+    },
+    {
+      "id": "tone-7",
+      "source": "assets/cameralook/tone-7.lut",
+      "sha256": "c80d0e2f4cdea2084949272655a3709378f0c598e014291228ba24a64c9efc44"
+    },
+    {
+      "id": "tone-8",
+      "source": "assets/cameralook/tone-8.lut",
+      "sha256": "6fec3ed62c56912affc3f2c173146c3f76c937b6c42a6105f2e45a585d71e53d"
+    },
+    {
+      "id": "tone-9",
+      "source": "assets/cameralook/tone-9.lut",
+      "sha256": "a292fb803cd74a8f80ff9598a9481e34d4730a4b0191af9a7ac0335451cb1170"
+    },
+    {
+      "id": "tone-10",
+      "source": "assets/cameralook/tone-10.lut",
+      "sha256": "fb03964b53119a68aee842ef6c046d5ebe05485ddaa8fec8dd19620c6a0638b6"
+    },
+    {
+      "id": "tone-11",
+      "source": "assets/cameralook/tone-11.lut",
+      "sha256": "a09251ccd8c7c9ee19ad3fa567f2a6666b94df250c408c5387d8b93b794baab8"
+    },
+    {
+      "id": "tone-12",
+      "source": "assets/cameralook/tone-12.lut",
+      "sha256": "6d6f207da231fe8b74b16189baeef9ecf4dc1d3c4be535b34a897643df398f54"
+    },
+    {
+      "id": "tone-13",
+      "source": "assets/cameralook/tone-13.lut",
+      "sha256": "6861ff3d0728ed42466337cf47a84df693fa8bf6499bb76bb67cae67cafba561"
+    },
+    {
+      "id": "tone-14",
+      "source": "assets/cameralook/tone-14.lut",
+      "sha256": "959237680c97ce25b901c4644e5e684a9f79c063cad8ee49e297ed59a19e86fb"
+    },
+    {
+      "id": "tone-15",
+      "source": "assets/cameralook/tone-15.lut",
+      "sha256": "0286562ceb0bc86bf3f8544baf3a577343ac8936938dd4942d4771bcd57c6d7a"
+    },
+    {
+      "id": "tone-16",
+      "source": "assets/cameralook/tone-16.lut",
+      "sha256": "d7550267183356e273fd0ebe89657c21d2d461c903522797b034bb231ff5fb7f"
+    },
+    {
+      "id": "tone-17",
+      "source": "assets/cameralook/tone-17.lut",
+      "sha256": "46f760df94cd4c2d9ad3f84e6dcc12ee5aa5d2ff6561971b7b8d4e688e84f384"
+    },
+    {
+      "id": "tone-18",
+      "source": "assets/cameralook/tone-18.lut",
+      "sha256": "29c1ff96eb16508f4fb2aa577e12f75e44d3c944105daf6b18ef4aefed98e1e0"
+    },
+    {
+      "id": "tone-19",
+      "source": "assets/cameralook/tone-19.lut",
+      "sha256": "9e3409f0257e97c75525d4a8994c48c92102b968523bd89e72c4f906e7bf6d1f"
+    },
+    {
+      "id": "tone-20",
+      "source": "assets/cameralook/tone-20.lut",
+      "sha256": "15a6901af23acac65e3f84a3c6f78b10688d537ddc6f38f876a147ef913fc6e8"
+    },
+    {
+      "id": "tone-21",
+      "source": "assets/cameralook/tone-21.lut",
+      "sha256": "79e1c76e17696b90cb4fc3070b8cc08d08573d89573509694837bb72db3b7a73"
+    },
+    {
+      "id": "tone-22",
+      "source": "assets/cameralook/tone-22.lut",
+      "sha256": "d1b0911b39f2a288ed338fa9a57996460d03abf4b6b432581554253893af80cb"
+    }
+  ],
+  "model_signatures": {
+    "low": {
+      "sha256": "89f7e4e515467a6f47c9d74538a08d25ed7e148474fca2e3713db5e9259cf406",
+      "bytes": 15709687,
+      "inputs": [
+        {
+          "name": "input",
+          "dtype": 1,
+          "shape": [
+            1,
+            4,
+            "height",
+            "width"
+          ]
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "dtype": 1,
+          "shape": [
+            "Sliceoutput_dim_0",
+            3,
+            "height",
+            "width"
+          ]
+        }
+      ],
+      "operators": [
+        "AveragePool",
+        "Cast",
+        "Clip",
+        "Concat",
+        "Constant",
+        "ConstantOfShape",
+        "Conv",
+        "Gather",
+        "Mul",
+        "Pad",
+        "Reshape",
+        "Resize",
+        "Shape",
+        "Slice",
+        "Squeeze",
+        "Sub",
+        "Transpose",
+        "Unsqueeze"
+      ],
+      "nodes": 2806
+    },
+    "high": {
+      "sha256": "61eedf9d72141c0f5262a2b2d7791ea27d36b77cfb63a8312b007e447b14da73",
+      "bytes": 15636032,
+      "inputs": [
+        {
+          "name": "input",
+          "dtype": 1,
+          "shape": [
+            1,
+            4,
+            "height",
+            "width"
+          ]
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "dtype": 1,
+          "shape": [
+            "Sliceoutput_dim_0",
+            3,
+            "height",
+            "width"
+          ]
+        }
+      ],
+      "operators": [
+        "AveragePool",
+        "Cast",
+        "Clip",
+        "Concat",
+        "Constant",
+        "ConstantOfShape",
+        "Conv",
+        "Gather",
+        "Identity",
+        "Mul",
+        "Pad",
+        "Reshape",
+        "Resize",
+        "Shape",
+        "Slice",
+        "Squeeze",
+        "Sub",
+        "Transpose",
+        "Unsqueeze"
+      ],
+      "nodes": 2809
+    },
+    "colorfix": {
+      "sha256": "381e0c48c241b3a1eaf09843ab9cb43610a96eae7708c0316b17a8661620b74f",
+      "bytes": 31071922,
+      "inputs": [
+        {
+          "name": "input",
+          "dtype": 1,
+          "shape": [
+            1,
+            6,
+            "height",
+            "width"
+          ]
+        }
+      ],
+      "outputs": [
+        {
+          "name": "output",
+          "dtype": 1,
+          "shape": [
+            "Clipoutput_dim_0",
+            3,
+            "height",
+            "width"
+          ]
+        }
+      ],
+      "operators": [
+        "Clip",
+        "Concat",
+        "Constant",
+        "Conv",
+        "DepthToSpace",
+        "MaxPool"
+      ],
+      "nodes": 112
+    }
+  }
+}

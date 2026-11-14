@@ -1,0 +1,1078 @@
+[
+  {
+    "id": "tone-0",
+    "sourceToneID": 16,
+    "name": "富士 CC II",
+    "resource": "tone-0",
+    "kind": "clu1",
+    "category": "相机影调",
+    "dimension": 33,
+    "minimum": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "maximum": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "sha256": "7e8bd9c4d293a046b76409e7fa45a3cb0024d50fae59df370c1db065e810c14d",
+    "scope": "ToneLUT: original CLU1 tetrahedral stage. ToneEffects: original ToneMath RGB/luma curves, nonlinear intensity and film (grain, vignette, negative clarity). Excludes QualityPass denoise/detail, ProfessionalSession and HDR.",
+    "originalParams": {
+      "strength": 1.5,
+      "grain": 20.0,
+      "shadows": 30.0,
+      "midtones": 30.0,
+      "highlights": 15.0,
+      "grainSize": 10.0,
+      "roughness": 15.0,
+      "colorVariation": 0.0,
+      "vignette": -20.0,
+      "midpoint": 25.0,
+      "clarity": 0.0,
+      "luma": [
+        0.0,
+        0.0,
+        255.0,
+        255.0
+      ],
+      "rgb": [
+        0.0,
+        0.0,
+        255.0,
+        255.0
+      ]
+    }
+  },
+  {
+    "id": "tone-1",
+    "sourceToneID": 17,
+    "name": "珠光",
+    "resource": "tone-1",
+    "kind": "clu1",
+    "category": "相机影调",
+    "dimension": 33,
+    "minimum": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "maximum": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "sha256": "5c25cd64893d104a8d86de9e6e8e965e3e50698237cb0b87d6ed13e9bb087e98",
+    "scope": "ToneLUT: original CLU1 tetrahedral stage. ToneEffects: original ToneMath RGB/luma curves, nonlinear intensity and film (grain, vignette, negative clarity). Excludes QualityPass denoise/detail, ProfessionalSession and HDR.",
+    "originalParams": {
+      "strength": 1.5499999523162842,
+      "grain": 0.0,
+      "shadows": 0.0,
+      "midtones": 0.0,
+      "highlights": 0.0,
+      "grainSize": 30.0,
+      "roughness": 30.0,
+      "colorVariation": 0.0,
+      "vignette": 0.0,
+      "midpoint": 50.0,
+      "clarity": 0.0,
+      "luma": [
+        0.0,
+        0.0,
+        255.0,
+        255.0
+      ],
+      "rgb": [
+        0.0,
+        0.0,
+        255.0,
+        255.0
+      ]
+    }
+  },
+  {
+    "id": "tone-2",
+    "sourceToneID": 18,
+    "name": "Pocket",
+    "resource": "tone-2",
+    "kind": "clu1",
+    "category": "相机影调",
+    "dimension": 33,
+    "minimum": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "maximum": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "sha256": "12b12be5d8e4cff17c7ae619325bc4c4e2afd2c594772cce8fef779334c6b95d",
+    "scope": "ToneLUT: original CLU1 tetrahedral stage. ToneEffects: original ToneMath RGB/luma curves, nonlinear intensity and film (grain, vignette, negative clarity). Excludes QualityPass denoise/detail, ProfessionalSession and HDR.",
+    "originalParams": {
+      "strength": 1.5,
+      "grain": 0.0,
+      "shadows": 0.0,
+      "midtones": 0.0,
+      "highlights": 0.0,
+      "grainSize": 30.0,
+      "roughness": 30.0,
+      "colorVariation": 0.0,
+      "vignette": 0.0,
+      "midpoint": 50.0,
+      "clarity": 0.0,
+      "luma": [
+        0.0,
+        0.0,
+        255.0,
+        255.0
+      ],
+      "rgb": [
+        0.0,
+        0.0,
+        255.0,
+        255.0
+      ]
+    }
+  },
+  {
+    "id": "tone-3",
+    "sourceToneID": 19,
+    "name": "富士 NN",
+    "resource": "tone-3",
+    "kind": "clu1",
+    "category": "相机影调",
+    "dimension": 32,
+    "minimum": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "maximum": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "sha256": "cd72c8a64b2a99454726f10bdb410a317a55afe0e4d1a1607ce0dca31402efed",
+    "scope": "ToneLUT: original CLU1 tetrahedral stage. ToneEffects: original ToneMath RGB/luma curves, nonlinear intensity and film (grain, vignette, negative clarity). Excludes QualityPass denoise/detail, ProfessionalSession and HDR.",
+    "originalParams": {
+      "strength": 1.4500000476837158,
+      "grain": 30.0,
+      "shadows": 30.0,
+      "midtones": 50.0,
+      "highlights": 15.0,
+      "grainSize": 10.0,
+      "roughness": 15.0,
+      "colorVariation": 10.0,
+      "vignette": -45.0,
+      "midpoint": 30.0,
+      "clarity": 0.0,
+      "luma": [
+        0.0,
+        0.0,
+        78.0,
+        85.0,
+        135.0,
+        137.0,
+        255.0,
+        255.0
+      ],
+      "rgb": [
+        0.0,
+        0.0,
+        255.0,
+        255.0
+      ]
+    }
+  },
+  {
+    "id": "tone-4",
+    "sourceToneID": 20,
+    "name": "富士 NC",
+    "resource": "tone-4",
+    "kind": "clu1",
+    "category": "相机影调",
+    "dimension": 32,
+    "minimum": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "maximum": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "sha256": "52342e01b64eed34cbd45f2fe7f1c71b8fe30013c59d1cb8867d2dc46cce2d4d",
+    "scope": "ToneLUT: original CLU1 tetrahedral stage. ToneEffects: original ToneMath RGB/luma curves, nonlinear intensity and film (grain, vignette, negative clarity). Excludes QualityPass denoise/detail, ProfessionalSession and HDR.",
+    "originalParams": {
+      "strength": 1.350000023841858,
+      "grain": 60.0,
+      "shadows": 30.0,
+      "midtones": 50.0,
+      "highlights": 15.0,
+      "grainSize": 10.0,
+      "roughness": 15.0,
+      "colorVariation": 10.0,
+      "vignette": -45.0,
+      "midpoint": 30.0,
+      "clarity": 0.0,
+      "luma": [
+        0.0,
+        0.0,
+        255.0,
+        255.0
+      ],
+      "rgb": [
+        0.0,
+        0.0,
+        255.0,
+        255.0
+      ]
+    }
+  },
+  {
+    "id": "tone-5",
+    "sourceToneID": 21,
+    "name": "理光正片",
+    "resource": "tone-5",
+    "kind": "clu1",
+    "category": "相机影调",
+    "dimension": 32,
+    "minimum": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "maximum": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "sha256": "bb771ef7f6f2f35d43fa2e1a91bd88b2d6e777342663676269b411ff2be42f90",
+    "scope": "ToneLUT: original CLU1 tetrahedral stage. ToneEffects: original ToneMath RGB/luma curves, nonlinear intensity and film (grain, vignette, negative clarity). Excludes QualityPass denoise/detail, ProfessionalSession and HDR.",
+    "originalParams": {
+      "strength": 1.399999976158142,
+      "grain": 0.0,
+      "shadows": 0.0,
+      "midtones": 0.0,
+      "highlights": 0.0,
+      "grainSize": 0.0,
+      "roughness": 0.0,
+      "colorVariation": 0.0,
+      "vignette": 0.0,
+      "midpoint": 50.0,
+      "clarity": 0.0,
+      "luma": [
+        0.0,
+        0.0,
+        255.0,
+        255.0
+      ],
+      "rgb": [
+        0.0,
+        0.0,
+        255.0,
+        255.0
+      ]
+    }
+  },
+  {
+    "id": "tone-6",
+    "sourceToneID": 22,
+    "name": "理光负片",
+    "resource": "tone-6",
+    "kind": "clu1",
+    "category": "相机影调",
+    "dimension": 32,
+    "minimum": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "maximum": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "sha256": "9a309f1023ae7ba21a85a6665cdf50f3572d9f5e16402c78359666c6e5377ebd",
+    "scope": "ToneLUT: original CLU1 tetrahedral stage. ToneEffects: original ToneMath RGB/luma curves, nonlinear intensity and film (grain, vignette, negative clarity). Excludes QualityPass denoise/detail, ProfessionalSession and HDR.",
+    "originalParams": {
+      "strength": 1.350000023841858,
+      "grain": 0.0,
+      "shadows": 0.0,
+      "midtones": 0.0,
+      "highlights": 0.0,
+      "grainSize": 0.0,
+      "roughness": 0.0,
+      "colorVariation": 0.0,
+      "vignette": 0.0,
+      "midpoint": 50.0,
+      "clarity": 0.0,
+      "luma": [
+        0.0,
+        0.0,
+        255.0,
+        255.0
+      ],
+      "rgb": [
+        0.0,
+        0.0,
+        255.0,
+        255.0
+      ]
+    }
+  },
+  {
+    "id": "tone-7",
+    "sourceToneID": 23,
+    "name": "全能 400",
+    "resource": "tone-7",
+    "kind": "clu1",
+    "category": "相机影调",
+    "dimension": 32,
+    "minimum": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "maximum": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "sha256": "c80d0e2f4cdea2084949272655a3709378f0c598e014291228ba24a64c9efc44",
+    "scope": "ToneLUT: original CLU1 tetrahedral stage. ToneEffects: original ToneMath RGB/luma curves, nonlinear intensity and film (grain, vignette, negative clarity). Excludes QualityPass denoise/detail, ProfessionalSession and HDR.",
+    "originalParams": {
+      "strength": 1.399999976158142,
+      "grain": 30.0,
+      "shadows": 30.0,
+      "midtones": 50.0,
+      "highlights": 15.0,
+      "grainSize": 10.0,
+      "roughness": 15.0,
+      "colorVariation": 10.0,
+      "vignette": -10.0,
+      "midpoint": 50.0,
+      "clarity": 0.0,
+      "luma": [
+        0.0,
+        0.0,
+        255.0,
+        255.0
+      ],
+      "rgb": [
+        0.0,
+        0.0,
+        255.0,
+        255.0
+      ]
+    }
+  },
+  {
+    "id": "tone-8",
+    "sourceToneID": 24,
+    "name": "哈苏蓝",
+    "resource": "tone-8",
+    "kind": "clu1",
+    "category": "相机影调",
+    "dimension": 33,
+    "minimum": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "maximum": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "sha256": "6fec3ed62c56912affc3f2c173146c3f76c937b6c42a6105f2e45a585d71e53d",
+    "scope": "ToneLUT: original CLU1 tetrahedral stage. ToneEffects: original ToneMath RGB/luma curves, nonlinear intensity and film (grain, vignette, negative clarity). Excludes QualityPass denoise/detail, ProfessionalSession and HDR.",
+    "originalParams": {
+      "strength": 1.75,
+      "grain": 10.0,
+      "shadows": 50.0,
+      "midtones": 30.0,
+      "highlights": 15.0,
+      "grainSize": 30.0,
+      "roughness": 30.0,
+      "colorVariation": 0.0,
+      "vignette": -63.0,
+      "midpoint": 10.0,
+      "clarity": -10.0,
+      "luma": [
+        5.0,
+        0.0,
+        89.0,
+        88.0,
+        255.0,
+        241.0
+      ],
+      "rgb": [
+        0.0,
+        0.0,
+        255.0,
+        255.0
+      ]
+    }
+  },
+  {
+    "id": "tone-9",
+    "sourceToneID": 25,
+    "name": "柯达 5207",
+    "resource": "tone-9",
+    "kind": "clu1",
+    "category": "相机影调",
+    "dimension": 33,
+    "minimum": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "maximum": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "sha256": "a292fb803cd74a8f80ff9598a9481e34d4730a4b0191af9a7ac0335451cb1170",
+    "scope": "ToneLUT: original CLU1 tetrahedral stage. ToneEffects: original ToneMath RGB/luma curves, nonlinear intensity and film (grain, vignette, negative clarity). Excludes QualityPass denoise/detail, ProfessionalSession and HDR.",
+    "originalParams": {
+      "strength": 1.5,
+      "grain": 50.0,
+      "shadows": 45.0,
+      "midtones": 30.0,
+      "highlights": 15.0,
+      "grainSize": 10.0,
+      "roughness": 15.0,
+      "colorVariation": 10.0,
+      "vignette": -10.0,
+      "midpoint": 50.0,
+      "clarity": 0.0,
+      "luma": [
+        0.0,
+        0.0,
+        255.0,
+        255.0
+      ],
+      "rgb": [
+        0.0,
+        0.0,
+        255.0,
+        255.0
+      ]
+    }
+  },
+  {
+    "id": "tone-10",
+    "sourceToneID": 26,
+    "name": "富士 CC",
+    "resource": "tone-10",
+    "kind": "clu1",
+    "category": "相机影调",
+    "dimension": 33,
+    "minimum": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "maximum": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "sha256": "fb03964b53119a68aee842ef6c046d5ebe05485ddaa8fec8dd19620c6a0638b6",
+    "scope": "ToneLUT: original CLU1 tetrahedral stage. ToneEffects: original ToneMath RGB/luma curves, nonlinear intensity and film (grain, vignette, negative clarity). Excludes QualityPass denoise/detail, ProfessionalSession and HDR.",
+    "originalParams": {
+      "strength": 1.7000000476837158,
+      "grain": 20.0,
+      "shadows": 50.0,
+      "midtones": 30.0,
+      "highlights": 15.0,
+      "grainSize": 30.0,
+      "roughness": 30.0,
+      "colorVariation": 0.0,
+      "vignette": -35.0,
+      "midpoint": 20.0,
+      "clarity": 0.0,
+      "luma": [
+        0.0,
+        0.0,
+        255.0,
+        255.0
+      ],
+      "rgb": [
+        0.0,
+        0.0,
+        255.0,
+        255.0
+      ]
+    }
+  },
+  {
+    "id": "tone-11",
+    "sourceToneID": 27,
+    "name": "800T 冷调",
+    "resource": "tone-11",
+    "kind": "clu1",
+    "category": "相机影调",
+    "dimension": 33,
+    "minimum": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "maximum": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "sha256": "a09251ccd8c7c9ee19ad3fa567f2a6666b94df250c408c5387d8b93b794baab8",
+    "scope": "ToneLUT: original CLU1 tetrahedral stage. ToneEffects: original ToneMath RGB/luma curves, nonlinear intensity and film (grain, vignette, negative clarity). Excludes QualityPass denoise/detail, ProfessionalSession and HDR.",
+    "originalParams": {
+      "strength": 1.5,
+      "grain": 25.0,
+      "shadows": 50.0,
+      "midtones": 30.0,
+      "highlights": 15.0,
+      "grainSize": 30.0,
+      "roughness": 30.0,
+      "colorVariation": 0.0,
+      "vignette": -50.0,
+      "midpoint": 30.0,
+      "clarity": 0.0,
+      "luma": [
+        0.0,
+        0.0,
+        255.0,
+        255.0
+      ],
+      "rgb": [
+        0.0,
+        0.0,
+        255.0,
+        255.0
+      ]
+    }
+  },
+  {
+    "id": "tone-12",
+    "sourceToneID": 28,
+    "name": "富士 C200",
+    "resource": "tone-12",
+    "kind": "clu1",
+    "category": "相机影调",
+    "dimension": 33,
+    "minimum": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "maximum": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "sha256": "6d6f207da231fe8b74b16189baeef9ecf4dc1d3c4be535b34a897643df398f54",
+    "scope": "ToneLUT: original CLU1 tetrahedral stage. ToneEffects: original ToneMath RGB/luma curves, nonlinear intensity and film (grain, vignette, negative clarity). Excludes QualityPass denoise/detail, ProfessionalSession and HDR.",
+    "originalParams": {
+      "strength": 1.399999976158142,
+      "grain": 50.0,
+      "shadows": 40.0,
+      "midtones": 30.0,
+      "highlights": 15.0,
+      "grainSize": 35.0,
+      "roughness": 30.0,
+      "colorVariation": 0.0,
+      "vignette": 0.0,
+      "midpoint": 50.0,
+      "clarity": 0.0,
+      "luma": [
+        0.0,
+        0.0,
+        255.0,
+        255.0
+      ],
+      "rgb": [
+        0.0,
+        0.0,
+        105.0,
+        109.0,
+        197.0,
+        206.0,
+        255.0,
+        255.0
+      ]
+    }
+  },
+  {
+    "id": "tone-13",
+    "sourceToneID": 29,
+    "name": "G7X II",
+    "resource": "tone-13",
+    "kind": "clu1",
+    "category": "相机影调",
+    "dimension": 33,
+    "minimum": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "maximum": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "sha256": "6861ff3d0728ed42466337cf47a84df693fa8bf6499bb76bb67cae67cafba561",
+    "scope": "ToneLUT: original CLU1 tetrahedral stage. ToneEffects: original ToneMath RGB/luma curves, nonlinear intensity and film (grain, vignette, negative clarity). Excludes QualityPass denoise/detail, ProfessionalSession and HDR.",
+    "originalParams": {
+      "strength": 1.5,
+      "grain": 0.0,
+      "shadows": 0.0,
+      "midtones": 0.0,
+      "highlights": 0.0,
+      "grainSize": 0.0,
+      "roughness": 0.0,
+      "colorVariation": 0.0,
+      "vignette": 0.0,
+      "midpoint": 50.0,
+      "clarity": 0.0,
+      "luma": [
+        0.0,
+        0.0,
+        255.0,
+        255.0
+      ],
+      "rgb": [
+        0.0,
+        0.0,
+        255.0,
+        255.0
+      ]
+    }
+  },
+  {
+    "id": "tone-14",
+    "sourceToneID": 30,
+    "name": "柯达 5219",
+    "resource": "tone-14",
+    "kind": "clu1",
+    "category": "相机影调",
+    "dimension": 33,
+    "minimum": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "maximum": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "sha256": "959237680c97ce25b901c4644e5e684a9f79c063cad8ee49e297ed59a19e86fb",
+    "scope": "ToneLUT: original CLU1 tetrahedral stage. ToneEffects: original ToneMath RGB/luma curves, nonlinear intensity and film (grain, vignette, negative clarity). Excludes QualityPass denoise/detail, ProfessionalSession and HDR.",
+    "originalParams": {
+      "strength": 1.399999976158142,
+      "grain": 60.0,
+      "shadows": 55.0,
+      "midtones": 20.0,
+      "highlights": 15.0,
+      "grainSize": 10.0,
+      "roughness": 30.0,
+      "colorVariation": 0.0,
+      "vignette": -45.0,
+      "midpoint": 0.0,
+      "clarity": 0.0,
+      "luma": [
+        0.0,
+        0.0,
+        149.0,
+        148.0,
+        193.0,
+        189.0,
+        255.0,
+        255.0
+      ],
+      "rgb": [
+        0.0,
+        0.0,
+        41.0,
+        36.0,
+        118.0,
+        115.0,
+        255.0,
+        255.0
+      ]
+    }
+  },
+  {
+    "id": "tone-15",
+    "sourceToneID": 31,
+    "name": "Classic U",
+    "resource": "tone-15",
+    "kind": "clu1",
+    "category": "相机影调",
+    "dimension": 33,
+    "minimum": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "maximum": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "sha256": "0286562ceb0bc86bf3f8544baf3a577343ac8936938dd4942d4771bcd57c6d7a",
+    "scope": "ToneLUT: original CLU1 tetrahedral stage. ToneEffects: original ToneMath RGB/luma curves, nonlinear intensity and film (grain, vignette, negative clarity). Excludes QualityPass denoise/detail, ProfessionalSession and HDR.",
+    "originalParams": {
+      "strength": 1.4500000476837158,
+      "grain": 40.0,
+      "shadows": 40.0,
+      "midtones": 30.0,
+      "highlights": 15.0,
+      "grainSize": 20.0,
+      "roughness": 20.0,
+      "colorVariation": 20.0,
+      "vignette": -30.0,
+      "midpoint": 0.0,
+      "clarity": 0.0,
+      "luma": [
+        0.0,
+        0.0,
+        255.0,
+        255.0
+      ],
+      "rgb": [
+        0.0,
+        0.0,
+        255.0,
+        255.0
+      ]
+    }
+  },
+  {
+    "id": "tone-16",
+    "sourceToneID": 32,
+    "name": "G12",
+    "resource": "tone-16",
+    "kind": "clu1",
+    "category": "相机影调",
+    "dimension": 33,
+    "minimum": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "maximum": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "sha256": "d7550267183356e273fd0ebe89657c21d2d461c903522797b034bb231ff5fb7f",
+    "scope": "ToneLUT: original CLU1 tetrahedral stage. ToneEffects: original ToneMath RGB/luma curves, nonlinear intensity and film (grain, vignette, negative clarity). Excludes QualityPass denoise/detail, ProfessionalSession and HDR.",
+    "originalParams": {
+      "strength": 1.4500000476837158,
+      "grain": 0.0,
+      "shadows": 0.0,
+      "midtones": 0.0,
+      "highlights": 0.0,
+      "grainSize": 30.0,
+      "roughness": 30.0,
+      "colorVariation": 0.0,
+      "vignette": 0.0,
+      "midpoint": 50.0,
+      "clarity": 0.0,
+      "luma": [
+        0.0,
+        0.0,
+        255.0,
+        255.0
+      ],
+      "rgb": [
+        0.0,
+        0.0,
+        255.0,
+        255.0
+      ]
+    }
+  },
+  {
+    "id": "tone-17",
+    "sourceToneID": 33,
+    "name": "柯达正片 64",
+    "resource": "tone-17",
+    "kind": "clu1",
+    "category": "相机影调",
+    "dimension": 33,
+    "minimum": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "maximum": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "sha256": "46f760df94cd4c2d9ad3f84e6dcc12ee5aa5d2ff6561971b7b8d4e688e84f384",
+    "scope": "ToneLUT: original CLU1 tetrahedral stage. ToneEffects: original ToneMath RGB/luma curves, nonlinear intensity and film (grain, vignette, negative clarity). Excludes QualityPass denoise/detail, ProfessionalSession and HDR.",
+    "originalParams": {
+      "strength": 1.5,
+      "grain": 50.0,
+      "shadows": 50.0,
+      "midtones": 30.0,
+      "highlights": 15.0,
+      "grainSize": 30.0,
+      "roughness": 30.0,
+      "colorVariation": 0.0,
+      "vignette": -40.0,
+      "midpoint": 30.0,
+      "clarity": 0.0,
+      "luma": [
+        0.0,
+        0.0,
+        255.0,
+        255.0
+      ],
+      "rgb": [
+        0.0,
+        0.0,
+        255.0,
+        255.0
+      ]
+    }
+  },
+  {
+    "id": "tone-18",
+    "sourceToneID": 34,
+    "name": "Portra 160",
+    "resource": "tone-18",
+    "kind": "clu1",
+    "category": "相机影调",
+    "dimension": 33,
+    "minimum": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "maximum": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "sha256": "29c1ff96eb16508f4fb2aa577e12f75e44d3c944105daf6b18ef4aefed98e1e0",
+    "scope": "ToneLUT: original CLU1 tetrahedral stage. ToneEffects: original ToneMath RGB/luma curves, nonlinear intensity and film (grain, vignette, negative clarity). Excludes QualityPass denoise/detail, ProfessionalSession and HDR.",
+    "originalParams": {
+      "strength": 1.5,
+      "grain": 25.0,
+      "shadows": 50.0,
+      "midtones": 35.0,
+      "highlights": 15.0,
+      "grainSize": 30.0,
+      "roughness": 30.0,
+      "colorVariation": 0.0,
+      "vignette": -35.0,
+      "midpoint": 35.0,
+      "clarity": 0.0,
+      "luma": [
+        0.0,
+        0.0,
+        255.0,
+        255.0
+      ],
+      "rgb": [
+        0.0,
+        0.0,
+        255.0,
+        255.0
+      ]
+    }
+  },
+  {
+    "id": "tone-19",
+    "sourceToneID": 35,
+    "name": "哈苏蓝 II",
+    "resource": "tone-19",
+    "kind": "clu1",
+    "category": "相机影调",
+    "dimension": 33,
+    "minimum": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "maximum": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "sha256": "9e3409f0257e97c75525d4a8994c48c92102b968523bd89e72c4f906e7bf6d1f",
+    "scope": "ToneLUT: original CLU1 tetrahedral stage. ToneEffects: original ToneMath RGB/luma curves, nonlinear intensity and film (grain, vignette, negative clarity). Excludes QualityPass denoise/detail, ProfessionalSession and HDR.",
+    "originalParams": {
+      "strength": 1.399999976158142,
+      "grain": 15.0,
+      "shadows": 30.0,
+      "midtones": 35.0,
+      "highlights": 15.0,
+      "grainSize": 10.0,
+      "roughness": 15.0,
+      "colorVariation": 10.0,
+      "vignette": -11.0,
+      "midpoint": 28.0,
+      "clarity": -6.0,
+      "luma": [
+        0.0,
+        0.0,
+        255.0,
+        255.0
+      ],
+      "rgb": [
+        0.0,
+        0.0,
+        255.0,
+        255.0
+      ]
+    }
+  },
+  {
+    "id": "tone-20",
+    "sourceToneID": 36,
+    "name": "松下 S9 暖调",
+    "resource": "tone-20",
+    "kind": "clu1",
+    "category": "相机影调",
+    "dimension": 33,
+    "minimum": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "maximum": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "sha256": "15a6901af23acac65e3f84a3c6f78b10688d537ddc6f38f876a147ef913fc6e8",
+    "scope": "ToneLUT: original CLU1 tetrahedral stage. ToneEffects: original ToneMath RGB/luma curves, nonlinear intensity and film (grain, vignette, negative clarity). Excludes QualityPass denoise/detail, ProfessionalSession and HDR.",
+    "originalParams": {
+      "strength": 1.4500000476837158,
+      "grain": 25.0,
+      "shadows": 50.0,
+      "midtones": 30.0,
+      "highlights": 15.0,
+      "grainSize": 30.0,
+      "roughness": 30.0,
+      "colorVariation": 0.0,
+      "vignette": -50.0,
+      "midpoint": 30.0,
+      "clarity": 0.0,
+      "luma": [
+        0.0,
+        0.0,
+        255.0,
+        255.0
+      ],
+      "rgb": [
+        0.0,
+        0.0,
+        255.0,
+        255.0
+      ]
+    }
+  },
+  {
+    "id": "tone-21",
+    "sourceToneID": 37,
+    "name": "理光 GR III",
+    "resource": "tone-21",
+    "kind": "clu1",
+    "category": "相机影调",
+    "dimension": 33,
+    "minimum": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "maximum": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "sha256": "79e1c76e17696b90cb4fc3070b8cc08d08573d89573509694837bb72db3b7a73",
+    "scope": "ToneLUT: original CLU1 tetrahedral stage. ToneEffects: original ToneMath RGB/luma curves, nonlinear intensity and film (grain, vignette, negative clarity). Excludes QualityPass denoise/detail, ProfessionalSession and HDR.",
+    "originalParams": {
+      "strength": 1.399999976158142,
+      "grain": 10.0,
+      "shadows": 50.0,
+      "midtones": 30.0,
+      "highlights": 15.0,
+      "grainSize": 30.0,
+      "roughness": 30.0,
+      "colorVariation": 0.0,
+      "vignette": 0.0,
+      "midpoint": 50.0,
+      "clarity": -5.0,
+      "luma": [
+        0.0,
+        0.0,
+        255.0,
+        255.0
+      ],
+      "rgb": [
+        0.0,
+        0.0,
+        255.0,
+        255.0
+      ]
+    }
+  },
+  {
+    "id": "tone-22",
+    "sourceToneID": 38,
+    "name": "适马 BF",
+    "resource": "tone-22",
+    "kind": "clu1",
+    "category": "相机影调",
+    "dimension": 33,
+    "minimum": [
+      0.0,
+      0.0,
+      0.0
+    ],
+    "maximum": [
+      1.0,
+      1.0,
+      1.0
+    ],
+    "sha256": "d1b0911b39f2a288ed338fa9a57996460d03abf4b6b432581554253893af80cb",
+    "scope": "ToneLUT: original CLU1 tetrahedral stage. ToneEffects: original ToneMath RGB/luma curves, nonlinear intensity and film (grain, vignette, negative clarity). Excludes QualityPass denoise/detail, ProfessionalSession and HDR.",
+    "originalParams": {
+      "strength": 1.4500000476837158,
+      "grain": 6.0,
+      "shadows": 6.0,
+      "midtones": 6.0,
+      "highlights": 6.0,
+      "grainSize": 6.0,
+      "roughness": 6.0,
+      "colorVariation": 0.0,
+      "vignette": -30.0,
+      "midpoint": 15.0,
+      "clarity": -10.0,
+      "luma": [
+        0.0,
+        0.0,
+        255.0,
+        255.0
+      ],
+      "rgb": [
+        0.0,
+        0.0,
+        255.0,
+        255.0
+      ]
+    }
+  }
+]

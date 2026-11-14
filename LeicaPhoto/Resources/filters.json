@@ -1,0 +1,345 @@
+[
+  {
+    "id": "standard",
+    "name": "标准",
+    "resource": "lut-standard",
+    "category": "调色滤镜",
+    "kind": "lut"
+  },
+  {
+    "id": "leica_m9",
+    "name": "徕卡M9",
+    "resource": "lut-Leica_M9_STD",
+    "category": "调色滤镜",
+    "kind": "lut"
+  },
+  {
+    "id": "leica",
+    "name": "徕卡ETN",
+    "resource": "lut-leica",
+    "category": "调色滤镜",
+    "kind": "lut"
+  },
+  {
+    "id": "monochrome",
+    "name": "徕卡黑白",
+    "resource": "lut-monochrome",
+    "category": "调色滤镜",
+    "kind": "lut"
+  },
+  {
+    "id": "Hasselblad",
+    "name": "哈苏自然",
+    "resource": "lut-Hasselblad",
+    "category": "调色滤镜",
+    "kind": "lut"
+  },
+  {
+    "id": "Hasselblad_portrait",
+    "name": "哈苏人像",
+    "resource": "lut-Hasselblad_portrait",
+    "category": "调色滤镜",
+    "kind": "lut"
+  },
+  {
+    "id": "fl3",
+    "name": "FL3",
+    "resource": "lut-fl3",
+    "category": "调色滤镜",
+    "kind": "lut"
+  },
+  {
+    "id": "nc",
+    "name": "富士NC",
+    "resource": "lut-nc",
+    "category": "调色滤镜",
+    "kind": "lut"
+  },
+  {
+    "id": "cc",
+    "name": "富士CC",
+    "resource": "lut-cc",
+    "category": "调色滤镜",
+    "kind": "lut"
+  },
+  {
+    "id": "astia",
+    "name": "富士Astia",
+    "resource": "lut-astia",
+    "category": "调色滤镜",
+    "kind": "lut"
+  },
+  {
+    "id": "ricoh_negative",
+    "name": "理光负片",
+    "resource": "lut-ricoh_negative",
+    "category": "调色滤镜",
+    "kind": "lut"
+  },
+  {
+    "id": "ricoh_positive",
+    "name": "理光正片",
+    "resource": "lut-ricoh_positive",
+    "category": "调色滤镜",
+    "kind": "lut"
+  },
+  {
+    "id": "ricoh_gr2_positive",
+    "name": "理光正片GR2",
+    "resource": "lut-Ricoh_GR2_POSI",
+    "category": "调色滤镜",
+    "kind": "lut"
+  },
+  {
+    "id": "ricoh_green",
+    "name": "电影绿",
+    "resource": "lut-ricoh_green",
+    "category": "调色滤镜",
+    "kind": "lut"
+  },
+  {
+    "id": "ricoh_yellow",
+    "name": "电影黄",
+    "resource": "lut-ricoh_yellow",
+    "category": "调色滤镜",
+    "kind": "lut"
+  },
+  {
+    "id": "pentax",
+    "name": "宾得明亮",
+    "resource": "lut-pentax",
+    "category": "调色滤镜",
+    "kind": "lut"
+  },
+  {
+    "id": "pentax_harubeni",
+    "name": "宾得春红",
+    "resource": "lut-Pentax_Harubeni",
+    "category": "调色滤镜",
+    "kind": "lut"
+  },
+  {
+    "id": "pentax_katen",
+    "name": "宾得夏天",
+    "resource": "lut-Pentax_Katen",
+    "category": "调色滤镜",
+    "kind": "lut"
+  },
+  {
+    "id": "pentax_kyushu",
+    "name": "宾得九秋",
+    "resource": "lut-Pentax_Kyushu",
+    "category": "调色滤镜",
+    "kind": "lut"
+  },
+  {
+    "id": "pentax_fuyuno",
+    "name": "宾得冬野",
+    "resource": "lut-Pentax_Fuyuno",
+    "category": "调色滤镜",
+    "kind": "lut"
+  },
+  {
+    "id": "film_kodak_ultramax_400",
+    "name": "Ultramax 400",
+    "resource": "lut-ultramax400",
+    "category": "调色滤镜",
+    "kind": "lut"
+  },
+  {
+    "id": "e100",
+    "name": "E100",
+    "resource": "lut-e100",
+    "category": "调色滤镜",
+    "kind": "lut"
+  },
+  {
+    "id": "film_rollei_cn200",
+    "name": "CN200",
+    "resource": "lut-cn200",
+    "category": "调色滤镜",
+    "kind": "lut"
+  },
+  {
+    "id": "film_natura_1600",
+    "name": "Natura 1600",
+    "resource": "lut-nature1600",
+    "category": "调色滤镜",
+    "kind": "lut"
+  },
+  {
+    "id": "film_superia_1600",
+    "name": "Superia 1600",
+    "resource": "lut-superia1600",
+    "category": "调色滤镜",
+    "kind": "lut"
+  },
+  {
+    "id": "film_cinestill_800t",
+    "name": "Cinestill 800T",
+    "resource": "lut-cinestill800t.33",
+    "category": "调色滤镜",
+    "kind": "lut"
+  },
+  {
+    "id": "tone-0",
+    "name": "富士 CC II",
+    "resource": "tone-0",
+    "category": "相机影调",
+    "kind": "clu1"
+  },
+  {
+    "id": "tone-1",
+    "name": "珠光",
+    "resource": "tone-1",
+    "category": "相机影调",
+    "kind": "clu1"
+  },
+  {
+    "id": "tone-2",
+    "name": "Pocket",
+    "resource": "tone-2",
+    "category": "相机影调",
+    "kind": "clu1"
+  },
+  {
+    "id": "tone-3",
+    "name": "富士 NN",
+    "resource": "tone-3",
+    "category": "相机影调",
+    "kind": "clu1"
+  },
+  {
+    "id": "tone-4",
+    "name": "富士 NC",
+    "resource": "tone-4",
+    "category": "相机影调",
+    "kind": "clu1"
+  },
+  {
+    "id": "tone-5",
+    "name": "理光正片",
+    "resource": "tone-5",
+    "category": "相机影调",
+    "kind": "clu1"
+  },
+  {
+    "id": "tone-6",
+    "name": "理光负片",
+    "resource": "tone-6",
+    "category": "相机影调",
+    "kind": "clu1"
+  },
+  {
+    "id": "tone-7",
+    "name": "全能 400",
+    "resource": "tone-7",
+    "category": "相机影调",
+    "kind": "clu1"
+  },
+  {
+    "id": "tone-8",
+    "name": "哈苏蓝",
+    "resource": "tone-8",
+    "category": "相机影调",
+    "kind": "clu1"
+  },
+  {
+    "id": "tone-9",
+    "name": "柯达 5207",
+    "resource": "tone-9",
+    "category": "相机影调",
+    "kind": "clu1"
+  },
+  {
+    "id": "tone-10",
+    "name": "富士 CC",
+    "resource": "tone-10",
+    "category": "相机影调",
+    "kind": "clu1"
+  },
+  {
+    "id": "tone-11",
+    "name": "800T 冷调",
+    "resource": "tone-11",
+    "category": "相机影调",
+    "kind": "clu1"
+  },
+  {
+    "id": "tone-12",
+    "name": "富士 C200",
+    "resource": "tone-12",
+    "category": "相机影调",
+    "kind": "clu1"
+  },
+  {
+    "id": "tone-13",
+    "name": "G7X II",
+    "resource": "tone-13",
+    "category": "相机影调",
+    "kind": "clu1"
+  },
+  {
+    "id": "tone-14",
+    "name": "柯达 5219",
+    "resource": "tone-14",
+    "category": "相机影调",
+    "kind": "clu1"
+  },
+  {
+    "id": "tone-15",
+    "name": "Classic U",
+    "resource": "tone-15",
+    "category": "相机影调",
+    "kind": "clu1"
+  },
+  {
+    "id": "tone-16",
+    "name": "G12",
+    "resource": "tone-16",
+    "category": "相机影调",
+    "kind": "clu1"
+  },
+  {
+    "id": "tone-17",
+    "name": "柯达正片 64",
+    "resource": "tone-17",
+    "category": "相机影调",
+    "kind": "clu1"
+  },
+  {
+    "id": "tone-18",
+    "name": "Portra 160",
+    "resource": "tone-18",
+    "category": "相机影调",
+    "kind": "clu1"
+  },
+  {
+    "id": "tone-19",
+    "name": "哈苏蓝 II",
+    "resource": "tone-19",
+    "category": "相机影调",
+    "kind": "clu1"
+  },
+  {
+    "id": "tone-20",
+    "name": "松下 S9 暖调",
+    "resource": "tone-20",
+    "category": "相机影调",
+    "kind": "clu1"
+  },
+  {
+    "id": "tone-21",
+    "name": "理光 GR III",
+    "resource": "tone-21",
+    "category": "相机影调",
+    "kind": "clu1"
+  },
+  {
+    "id": "tone-22",
+    "name": "适马 BF",
+    "resource": "tone-22",
+    "category": "相机影调",
+    "kind": "clu1"
+  }
+]
