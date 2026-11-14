@@ -4,7 +4,7 @@ import CoreML
 
 /// Which AI look the user asked the APK for. Android style 768/769/770 are
 /// "仿色·增强 / 仿色·颗粒 / 仿色·蒸馏"; only 770 (M9D) is ported so far.
-enum M9AIMode: String, CaseIterable, Identifiable {
+enum M9AIMode: String, CaseIterable, Identifiable, Codable {
     case full, distill
     var id: String { rawValue }
     var title: String { self == .full ? "M9 经典" : "M9D 蒸馏" }

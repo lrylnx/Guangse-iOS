@@ -1,8 +1,8 @@
 # 光色 · Guangse iOS
 
-在 iPhone / iPad 本地运行的 M9 AI 照片处理实验项目。当前版本 **0.5.1（build 7）**，要求 **iOS 17+**。
+在 iPhone / iPad 本地运行的 M9 AI 照片处理实验项目。当前版本 **0.6.0（build 8）**，要求 **iOS 17+**。
 
-[下载待签名 IPA（Releases）](https://github.com/lrylnx/Guangse-iOS/releases) · [v0.5.1](https://github.com/lrylnx/Guangse-iOS/releases/tag/v0.5.1)
+[下载待签名 IPA（Releases）](https://github.com/lrylnx/Guangse-iOS/releases) · [v0.6.0](https://github.com/lrylnx/Guangse-iOS/releases/tag/v0.6.0)
 
 ## 功能
 
@@ -31,7 +31,7 @@ open LeicaPhoto.xcodeproj
 生成供外部重签的设备 IPA：
 
 ```sh
-python3 scripts/build_ipa.py /tmp/Guangse-0.5.1-unsigned.ipa
+python3 scripts/build_ipa.py /tmp/Guangse-0.6.0-unsigned.ipa
 ```
 
 不传输出路径时，IPA 写入当前用户的桌面。该脚本验证 ARM64、版本、权限说明、4 个编译模型、49 款滤镜及 ZIP 完整性，不导出私钥、不创建证书。安装需要自己的 p12 和匹配描述文件。
@@ -44,6 +44,25 @@ python3 scripts/build_ipa.py /tmp/Guangse-0.5.1-unsigned.ipa
 2. 点击缩略图切换预览；按住“按住对比”显示左侧原图、右侧效果，松开恢复效果图。
 3. 相册照片点底部按钮批量保存；拍摄照片自动保存原片及效果照。
 4. 可中止批量保存；同一会话再次保存会跳过同一设置下已经成功的照片。
+
+## 相册分享一键生成（0.6.0）
+
+首次在光色打开右上角闪电按钮，可查看完整设置说明：
+
+1. 在光色选择 AI 模式、强度及滤镜。设置会保存，重启后仍可使用。
+2. 打开系统“快捷指令”，新建名为“光色一键生成”的快捷指令，添加光色的 **“一键生成并保存到相册”** 操作。
+3. 在快捷指令详细信息开启 **“在共享表单中显示”**，输入类型选择 **“图像”**；把操作里的“照片”设为 **“快捷指令输入”**。
+4. 之后在相册选一张或多张照片 → 分享 → 光色一键生成。光色打开后自动处理并保存 PNG，不再要求手动选图或点保存。
+
+首次运行仍可能出现系统权限确认。处理时保持光色在前台；完成后显示保存数量，可返回相册查看。此入口是用户创建的分享菜单快捷指令，不是原生 Share Extension，也不能保证 App 不出现或一直在后台运行。
+
+使用同一 PhotoProcessor 和最新预设，只自动保存本次分享的照片，不会自动保存编辑器里先前选择的其他照片。坏图会跳过，其余图继续；部分失败会报告已保存数量，成功资源不会误报失败。可停止，已读取但未保存的照片可在编辑器手动继续保存。
+
+分享入口不会额外缩图或重新编码输入；系统相册/快捷指令交来的照片版本仍受分享选项和系统转换影响，不能保证与“未修改原片”始终为相同字节。M9 经典继续受原有模型工作尺寸限制；M9D 保留源文件尺寸。
+
+无需分享扩展、App Group 或额外证书。覆盖安装时继续保持应用 Bundle ID 和签名身份，以便快捷指令识别同一个 App。
+
+构建脚本会检查 App Intent 的图片数组参数、前台运行配置和自动快捷指令元数据。`Checks/share-shortcut` 在 Mac 验证预设重载、损坏预设回退、逐张输入、坏图继续、取消清理、输入字节/尺寸保留，以及分享与相册同源 M9D PNG 像素一致。系统分享、App Intent 调度及实际 Photos 写入尚需 iPhone 验证。
 
 ## 0.5.1 修复
 

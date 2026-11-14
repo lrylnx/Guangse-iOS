@@ -1,7 +1,7 @@
 import Foundation
 import CoreImage
 
-struct EditorSettings: Hashable, Sendable {
+struct EditorSettings: Hashable, Sendable, Codable {
     var useAI = true
     var mode: M9AIMode = .distill
     var aiStrength = 1.0

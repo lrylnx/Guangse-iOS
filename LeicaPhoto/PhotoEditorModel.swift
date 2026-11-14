@@ -15,9 +15,16 @@ struct ImportedPhoto: Identifiable {
 
 @MainActor
 final class PhotoEditorModel: ObservableObject {
+    static let shared = PhotoEditorModel()
+    @Published private(set) var quickRunning = false
+    @Published var quickStatus: String?
+    var cameraActive = false
+    private var quickTask: Task<Int, Error>?
     @Published var photos: [ImportedPhoto] = []
     @Published var selectedID: UUID?
-    @Published var settings = EditorSettings() { didSet { if settings != oldValue { settingsChanged() } } }
+    @Published var settings = PhotoSettingsStore.load() {
+        didSet { if settings != oldValue { PhotoSettingsStore.save(settings); settingsChanged() } }
+    }
     @Published var preview: UIImage?
     @Published var showingOriginal = false
     @Published private(set) var comparisonOriginal: UIImage?
@@ -61,7 +68,8 @@ final class PhotoEditorModel: ObservableObject {
     var selected: ImportedPhoto? { photos.first { $0.id == selectedID } }
     var pendingCount: Int { photos.filter { $0.savedSettings != settings || $0.cameraBackup != nil }.count }
     var completedCount: Int { photos.count - pendingCount }
-    var busy: Bool { importing || saving || preparingCamera }
+    private var processing: Bool { importing || saving || preparingCamera }
+    var busy: Bool { processing || quickRunning }
     var selectedPosition: String {
         guard let index = photos.firstIndex(where: { $0.id == selectedID }) else { return "" }
         return "\(index + 1) / \(photos.count)"
@@ -197,8 +205,8 @@ final class PhotoEditorModel: ObservableObject {
         savePhotos(photos.filter { $0.savedSettings != settings || $0.cameraBackup != nil })
     }
 
-    private func savePhotos(_ requested: [ImportedPhoto]) {
-        guard !busy, !requested.isEmpty else { return }
+    private func savePhotos(_ requested: [ImportedPhoto], quiet: Bool = false) {
+        guard !processing, (!quickRunning || quiet), !requested.isEmpty else { return }
         previewTask?.cancel(); previewID = UUID(); previewing = false
         let snapshot = settings, pending = requested
         let token = UUID(); saveID = token
@@ -207,7 +215,8 @@ final class PhotoEditorModel: ObservableObject {
             let authorization = await PHPhotoLibrary.requestAuthorization(for: .addOnly)
             guard authorization == .authorized || authorization == .limited else {
                 saving = false
-                message = "请在系统设置中允许“光色”添加照片，然后重试。"
+                let text = "请在系统设置中允许“光色”添加照片，然后重试。"
+                if quiet { quickStatus = text } else { message = text }
                 schedulePreview()
                 return
             }
@@ -266,11 +275,80 @@ final class PhotoEditorModel: ObservableObject {
             }
             saving = false
             let summary = "本次保存原片 \(originalsSaved) 张、效果照 \(success) 张。"
-            if Task.isCancelled { message = summary + "已停止，再次保存会跳过已成功的项目。" }
+            let status: String
+            if Task.isCancelled { status = summary + "已停止，再次保存会跳过已成功的项目。" }
             else if failed > 0 {
-                message = summary + "\n" + details.joined(separator: "\n") + "\n可再次保存重试。尚未保存的拍摄原片仍保留在本机。"
-            } else { message = summary + "已全部保存到相册。" }
+                status = summary + "\n" + details.joined(separator: "\n") + "\n可再次保存重试。尚未保存的拍摄原片仍保留在本机。"
+            } else { status = summary + "已全部保存到相册。" }
+            if quiet { quickStatus = status } else { message = status }
             schedulePreview()
+        }
+    }
+
+    func generateSharedPhotos(count: Int, load: @escaping @Sendable (Int) async throws -> Data) async throws -> Int {
+        guard count > 0 else { throw QuickPhotoError.empty }
+        guard !busy, !cameraActive else { throw QuickPhotoError.busy }
+        quickRunning = true; quickStatus = nil; message = nil
+        previewTask?.cancel(); previewID = UUID(); previewing = false
+        let task = Task { try await self.runSharedPhotos(count: count, load: load) }
+        quickTask = task
+        defer {
+            importing = false; quickRunning = false; quickTask = nil
+            schedulePreview()
+        }
+        do {
+            return try await withTaskCancellationHandler(operation: { try await task.value }, onCancel: { task.cancel() })
+        } catch is CancellationError {
+            quickStatus = "已停止一键生成；已读取的未保存照片可手动继续保存。"
+            throw CancellationError()
+        }
+    }
+
+    private func runSharedPhotos(count: Int, load: @escaping @Sendable (Int) async throws -> Data) async throws -> Int {
+        importing = true; progress = 0; stage = "接收相册分享的照片"
+        let snapshot = settings
+        var added: [ImportedPhoto] = []
+        let received = try await SharedPhotoIntake.receive(count: count, directory: directory, load: load,
+            didRead: { source, thumbnail in
+                let photo = ImportedPhoto(source: source, thumbnail: UIImage(cgImage: thumbnail), assetIdentifier: nil)
+                photos.append(photo); added.append(photo)
+                if added.count == 1 {
+                    selectedID = source.id; preview = photo.thumbnail; displayedPreviewKey = nil; showingOriginal = false
+                }
+            }, progress: { fraction, text in progress = fraction; stage = text })
+        let unreadable = received.unreadable.count
+        importing = false
+        try Task.checkCancellation()
+        guard !added.isEmpty else {
+            quickStatus = "未能读取分享照片，请分享 JPEG、HEIC 或 PNG 照片。"
+            throw QuickPhotoError.unreadable
+        }
+        // Only the shared batch is auto-saved, never older editor selections.
+        savePhotos(added, quiet: true)
+        if let task = saveTask {
+            await withTaskCancellationHandler(operation: { await task.value }, onCancel: { task.cancel() })
+        }
+        try Task.checkCancellation()
+        let ids = Set(added.map { $0.id })
+        let saved = photos.filter { ids.contains($0.id) && $0.savedSettings == snapshot }.count
+        if unreadable > 0 || saved != added.count {
+            let detail = "分享 \(count) 张，成功保存 \(saved) 张；\(unreadable) 张未能读取。" + (quickStatus.map { "\n" + $0 } ?? "")
+            quickStatus = detail
+            throw QuickPhotoError.partial(detail)
+        }
+        quickStatus = "已自动生成并保存 \(saved) 张照片到相册。"
+        return saved
+    }
+
+    private enum QuickPhotoError: LocalizedError {
+        case empty, busy, unreadable, partial(String)
+        var errorDescription: String? {
+            switch self {
+            case .empty: return "没有收到照片。请在快捷指令中将“照片”设为“快捷指令输入”。"
+            case .busy: return "光色正在拍照或处理其他照片，请完成后重试。"
+            case .unreadable: return "无法读取分享照片，请使用 JPEG、HEIC 或 PNG 照片。"
+            case .partial(let detail): return detail
+            }
         }
     }
 
@@ -372,7 +450,11 @@ final class PhotoEditorModel: ObservableObject {
     }
 
     func cancel() {
-        if saving { saveTask?.cancel(); stage = "正在停止，已保存的照片会保留" }
+        if quickRunning {
+            quickTask?.cancel(); saveTask?.cancel(); stage = "正在停止，已保存的照片会保留"
+            quickStatus = "已停止一键生成；已读取的未保存照片可手动继续保存。"
+        }
+        else if saving { saveTask?.cancel(); stage = "正在停止，已保存的照片会保留" }
         else if importing { importTask?.cancel() }
     }
 

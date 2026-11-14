@@ -9,9 +9,10 @@ struct LeicaPhotoApp: App {
 }
 
 struct ContentView: View {
-    @StateObject private var model = PhotoEditorModel()
+    @StateObject private var model = PhotoEditorModel.shared
     @State private var selection: [PhotosPickerItem] = []
     @State private var advanced = false
+    @State private var showingQuickHelp = false
     @GestureState private var holdingComparison = false
     @State private var showingCamera = false
     @State private var recoveredCameraOriginals = false
@@ -23,6 +24,14 @@ struct ContentView: View {
             GeometryReader { geometry in
                 ScrollView {
                     VStack(spacing: 18) {
+                        if let status = model.quickStatus {
+                            HStack(alignment: .top, spacing: 10) {
+                                Image(systemName: "bolt.circle.fill").foregroundStyle(.orange)
+                                Text(status).font(.subheadline).frame(maxWidth: .infinity, alignment: .leading)
+                                Button { model.quickStatus = nil } label: { Image(systemName: "xmark") }
+                                    .accessibilityLabel("关闭一键生成提示")
+                            }.padding(14).background(panel, in: RoundedRectangle(cornerRadius: 14))
+                        }
                         photoPreview(height: min(480, max(240, geometry.size.height * 0.48)))
                         if !model.photos.isEmpty {
                             photoStrip
@@ -44,6 +53,9 @@ struct ContentView: View {
                 }
                 ToolbarItem(placement: .topBarTrailing) {
                     HStack(spacing: 16) {
+                        Button { showingQuickHelp = true } label: {
+                            Image(systemName: "bolt.circle").font(.title3).accessibilityLabel("相册一键生成设置")
+                        }.disabled(model.busy)
                         Button { openCamera() } label: {
                             Image(systemName: "camera").font(.title3).accessibilityLabel("拍照并生成效果")
                         }.disabled(model.busy)
@@ -56,17 +68,20 @@ struct ContentView: View {
                 }
             }
             .safeAreaInset(edge: .bottom, spacing: 0) { bottomBar }
+            .sheet(isPresented: $showingQuickHelp) { QuickShareHelpView() }
             .fullScreenCover(isPresented: $showingCamera, onDismiss: {
+                model.cameraActive = false
                 if !model.busy { model.schedulePreview() }
             }) {
                 CameraView { data in
                     showingCamera = false
+                    model.cameraActive = false
                     model.acceptCapture(data)
                 }
             }
-            .onAppear {
-                if !recoveredCameraOriginals { recoveredCameraOriginals = true; model.recoverCameraOriginals() }
-            }
+            .onAppear { recoverCameraIfNeeded() }
+            .onChange(of: model.busy) { _, busy in if !busy { recoverCameraIfNeeded() } }
+            .onChange(of: model.quickRunning) { _, running in if running { showingQuickHelp = false } }
             .onReceive(NotificationCenter.default.publisher(for: UIApplication.didReceiveMemoryWarningNotification)) { _ in
                 model.releasePreviewMemory()
             }
@@ -253,8 +268,14 @@ struct ContentView: View {
         }
     }
 
+    private func recoverCameraIfNeeded() {
+        guard !recoveredCameraOriginals, !model.busy else { return }
+        recoveredCameraOriginals = true
+        model.recoverCameraOriginals()
+    }
+
     private func openCamera() {
-        Task { if await model.prepareForCamera() { showingCamera = true } }
+        Task { if await model.prepareForCamera() { model.cameraActive = true; showingCamera = true } }
     }
 
     private var bottomBar: some View {

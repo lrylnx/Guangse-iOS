@@ -27,12 +27,20 @@ for item in filters:
  suffix='.lut' if item['kind']=='clu1' else '.plut'
  assert (app/(item['resource']+suffix)).is_file()
 assert (app/'m9-parameters.json').is_file()
+metadata=json.loads((app/'Metadata.appintents/extract.actionsdata').read_text())
+intent=metadata['actions']['GeneratePhotosIntent']
+assert intent['isDiscoverable'] and intent['openAppWhenRun'],'Shortcut must run in foreground app'
+parameter=next(p for p in intent['parameters'] if p['name']=='photos')
+assert 'array' in parameter['valueType'] and parameter['isInput'] and not parameter['isOptional']
+assert 'public.image' in json.dumps(parameter),'Shortcut must accept shared images'
+assert any(s['actionIdentifier']=='GeneratePhotosIntent' for s in metadata['autoShortcuts'])
+
 assert not (app/'_CodeSignature').exists(),'Unexpected stale signature in unsigned artifact'
 output=Path(sys.argv[1]) if len(sys.argv)>1 else (Path.home()/'Desktop')/f"光色-{info['CFBundleShortVersionString']}-M9AI-待签名.ipa"
 with zipfile.ZipFile(output,'w',zipfile.ZIP_DEFLATED,compresslevel=6) as archive:
  for p in sorted(app.rglob('*')):
   if p.is_file():archive.write(p,'Payload/LeicaPhoto.app/'+str(p.relative_to(app)))
 with zipfile.ZipFile(output) as archive:assert archive.testzip() is None
-record={'ipa':str(output),'bytes':output.stat().st_size,'sha256':hashlib.sha256(output.read_bytes()).hexdigest(),'bundleID':info['CFBundleIdentifier'],'version':info['CFBundleShortVersionString'],'build':info['CFBundleVersion'],'signing':'unsigned; external p12 + matching provisioning profile required','models':['M9_low','M9_high','M9_colorfix','M9_distill'],'filters':len(filters),'camera':'quality-priority still capture; original bytes + processed PNG; device validation pending'}
+record={'ipa':str(output),'bytes':output.stat().st_size,'sha256':hashlib.sha256(output.read_bytes()).hexdigest(),'bundleID':info['CFBundleIdentifier'],'version':info['CFBundleShortVersionString'],'build':info['CFBundleVersion'],'signing':'unsigned; external p12 + matching provisioning profile required','models':['M9_low','M9_high','M9_colorfix','M9_distill'],'filters':len(filters),'camera':'quality-priority still capture; original bytes + processed PNG; device validation pending','shortcut':'GeneratePhotosIntent; shared image array; foreground; metadata verified; device validation pending'}
 (root/'release-manifest.json').write_text(json.dumps(record,ensure_ascii=False,indent=2))
 print(json.dumps(record,ensure_ascii=False,indent=2))
