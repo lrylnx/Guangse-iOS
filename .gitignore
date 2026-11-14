@@ -28,3 +28,7 @@ Investigation/
 __pycache__/
 release-manifest.json
 Checks/*/*/
+
+Checks/**/*.png
+Checks/**/*.jpg
+Checks/**/*.capture

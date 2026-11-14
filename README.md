@@ -2,6 +2,8 @@
 
 在 iPhone / iPad 本地运行的 M9 AI 照片处理实验项目。当前版本 **0.5.0（build 6）**，要求 **iOS 17+**。
 
+[下载待签名 IPA（Releases）](https://github.com/lrylnx/Guangse-iOS/releases) · [v0.5.0](https://github.com/lrylnx/Guangse-iOS/releases/tag/v0.5.0)
+
 ## 功能
 
 - 4 个 Core ML 模型：M9 low、high、colorfix，以及 M9D 蒸馏模型。
